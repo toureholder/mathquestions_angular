@@ -1,0 +1,97 @@
+#questionPage {
+  position: relative;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: #f1f8e9;
+  background-image: url('/assets/2979685-removebg-preview.png');
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: top;
+  opacity: 0.25;
+}
+
+.app-page-wrapper {
+  text-align: center;
+  max-width: 300px;
+}
+
+div {
+  border: 0px solid lightcyan;
+}
+
+.row {
+  height: 6rem;
+}
+
+.question-container {
+  margin-top: calc(var(--app-default-spacing) * 3);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-family: 'Roboto Mono', monospace;
+
+  .inner {
+    border: 0px solid orange;
+    text-align: right;
+
+    button {
+      width: 100%;
+      height: 48px;
+    }
+  }
+}
+
+.box {
+  display: flex;
+  font-size: 4rem;
+  border-bottom: 5px solid black;
+  margin-bottom: var(--app-default-spacing);
+  justify-content: flex-end;
+}
+
+.sign-container {
+  margin-right: var(--app-default-spacing);
+  border: 0px solid blue;
+}
+
+.numbers-container {
+  text-align: right;
+  border: 0px solid green;
+}
+
+form {
+  text-align: center;
+
+  ::placeholder {
+    color: lightgray;
+    font-size: 2rem;
+  }
+}
+
+form button {
+  margin-top: calc(var(--app-default-spacing) * 2);
+}
+
+input {
+  text-align: right;
+  width: 15rem;
+  font-size: 4rem;
+  display: block;
+  font-family: 'Roboto Mono', monospace;
+  border-radius: 2px;
+}
+
+input.correct {
+  border: 4px solid green;
+}
+
+input.wrong {
+  border: 4px solid red;
+}

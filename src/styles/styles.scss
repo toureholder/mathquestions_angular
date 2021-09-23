@@ -1,6 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @use './theme.scss';
 
+:root {
+  font-size: 62.5%;
+}
+
 html,
 body {
   height: 100%;
@@ -17,4 +21,8 @@ body {
   margin-right: auto;
   max-width: 1224px;
   padding: 2.4rem;
+}
+
+.app-vertical-spacer {
+  height: var(--app-default-spacing);
 }

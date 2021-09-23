@@ -1,5 +1,13 @@
 <div class="app-page-wrapper">
-  <button mat-stroked-button color="primary">Adição</button>
-  <button mat-stroked-button color="primary">Subtração</button>
-  <button mat-stroked-button color="primary">Multiplicação</button>
+  <a [routerLink]="'/add'">
+    <button mat-stroked-button color="primary">Adição</button>
+  </a>
+
+  <a [routerLink]="'/subtract'">
+    <button mat-stroked-button color="primary">Subtração</button>
+  </a>
+
+  <a [routerLink]="'/multiply'">
+    <button mat-stroked-button color="primary">Multiplicação</button>
+  </a>
 </div>

@@ -13,6 +13,25 @@ const routes: Routes = [
       import('./pages/home/home.module').then((m) => m.HomeModule),
   },
   {
+    path: 'add',
+    loadChildren: () =>
+      import('./pages/adition/adition.module').then((m) => m.AditionModule),
+  },
+  {
+    path: 'subtract',
+    loadChildren: () =>
+      import('./pages/subtraction/subtraction.module').then(
+        (m) => m.SubtractionModule
+      ),
+  },
+  {
+    path: 'multiply',
+    loadChildren: () =>
+      import('./pages/multiplication/multiplication.module').then(
+        (m) => m.MultiplicationModule
+      ),
+  },
+  {
     path: '**',
     redirectTo: 'home',
   },

@@ -1,0 +1,7 @@
+<app-number-question
+  [operation]="operation"
+  [numbers]="numbers"
+  [isCorrect]="isCorrect"
+  (submitEvent)="checkAnswer($event)"
+  (generateNewQuestionEvent)="generateNewQestion()"
+></app-number-question>
