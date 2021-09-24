@@ -1,4 +1,37 @@
 nav {
   height: 64px;
   border-bottom: 1px solid var(--app-divider-color);
+  font-family: 'Patrick Hand', cursive;
+}
+
+.app-page-wrapper {
+  height: 100%;
+  padding: 0 2.4rem 0 2.4rem;
+}
+
+.app-brand {
+  height: 100%;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  color: var(--app-primary-color);
+}
+
+.app-brand .praticar {
+  color: #ff9800;
+}
+
+.app-brand .web {
+  color: #2196f3;
+}
+
+.app-brand .app {
+  color: #4caf50;
+}
+
+a,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
 }
