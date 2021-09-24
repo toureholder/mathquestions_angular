@@ -1,0 +1,27 @@
+{
+  "projects": {
+    "default": "math-5c094"
+  },
+  "targets": {
+    "givapp-938de": {
+      "hosting": {
+        "staging": [
+          "math-5c094"
+        ],
+        "production": [
+          "mathquestions"
+        ]
+      }
+    },
+    "math-5c094": {
+      "hosting": {
+        "staging": [
+          "math-5c094"
+        ],
+        "production": [
+          "mathquestions"
+        ]
+      }
+    }
+  }
+}
