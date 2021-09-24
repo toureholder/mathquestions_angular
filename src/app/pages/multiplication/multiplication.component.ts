@@ -22,17 +22,10 @@ export class MultiplicationComponent implements OnInit, OperationComponent {
   }
 
   generateNewQestion(): void {
-    const numberOfnumbers = 2;
-    const maxNumberValue = 10;
+    const firstNumber = Math.floor(Math.random() * 99) + 1;
+    const secondNumber = Math.floor(Math.random() * 6) + 1;
 
-    const randomNumbers: number[] = [];
-
-    for (let i = 0; i < numberOfnumbers; i++) {
-      const num = Math.floor(Math.random() * maxNumberValue) + 1;
-      randomNumbers.push(num);
-    }
-
-    this.numbers = randomNumbers;
+    this.numbers = [firstNumber, secondNumber];
     this.isCorrect = undefined;
   }
 }
