@@ -12,7 +12,7 @@ body {
 
 body {
   margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  font-family: 'Patrick Hand', cursive;
 }
 
 .app-page-wrapper {
@@ -25,4 +25,14 @@ body {
 
 .app-vertical-spacer {
   height: var(--app-default-spacing);
+}
+
+.mat-button,
+.mat-raised-button,
+.mat-icon-button,
+.mat-stroked-button,
+.mat-flat-button,
+.mat-fab,
+.mat-mini-fab {
+  font-size: 1.8rem;
 }
