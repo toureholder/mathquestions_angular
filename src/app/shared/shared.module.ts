@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
   ],
   exports: [
+    FormsModule,
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,

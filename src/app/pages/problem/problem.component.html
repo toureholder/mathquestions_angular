@@ -1,0 +1,68 @@
+<div id="problemPage">
+  <div class="is-correct-background" *ngIf="isCorrect"></div>
+  <div class="app-page-wrapper">
+    <p>
+      {{ problem?.text }}
+    </p>
+
+    <div class="app-vertical-spacer"></div>
+
+    <form (ngSubmit)="checkAnswer(userAnswer)">
+      <input
+        [(ngModel)]="userAnswer"
+        type="number"
+        name="answer"
+        data-test="user-answer"
+        [ngClass]="
+          isCorrect === undefined ? '' : isCorrect ? 'correct' : 'wrong'
+        "
+      />
+
+      <div class="app-vertical-spacer"></div>
+
+      <caption *ngIf="isCorrect === false" class="wrong">
+        Esssa reposta não certa. Tente novamente 💪
+      </caption>
+
+      <caption *ngIf="isCorrect === true" class="correct">
+        Exato! Toque em "Nova pergunta" e continue praticando 💪
+      </caption>
+
+      <div class="app-vertical-spacer"></div>
+
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        [disabled]="!userAnswer"
+      >
+        Verificar
+      </button>
+    </form>
+
+    <div class="app-vertical-spacer"></div>
+    <div class="app-vertical-spacer"></div>
+
+    <button
+      mat-stroked-button
+      color="primary"
+      data-test="new-question"
+      (click)="generateNewQestion()"
+    >
+      Nova pergunta <span class="material-icons"> refresh </span>
+    </button>
+
+    <div class="app-vertical-spacer"></div>
+    <div class="app-vertical-spacer"></div>
+
+    <a [routerLink]="'/'">
+      <button mat-stroked-button color="primary">
+        Página incial <span class="material-icons-outlined"> home </span>
+      </button>
+    </a>
+
+    <div class="app-vertical-spacer"></div>
+
+    <div class="app-vertical-spacer"></div>
+  </div>
+</div>

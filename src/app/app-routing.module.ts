@@ -31,6 +31,7 @@ const routes: Routes = [
         (m) => m.MultiplicationModule
       ),
   },
+  { path: 'problem', loadChildren: () => import('./pages/problem/problem.module').then(m => m.ProblemModule) },
   {
     path: '**',
     redirectTo: 'home',

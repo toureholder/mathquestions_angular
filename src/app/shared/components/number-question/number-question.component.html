@@ -1,5 +1,5 @@
 <div id="questionPage">
-  <div class="background" *ngIf="isCorrect"></div>
+  <div class="is-correct-background" *ngIf="isCorrect"></div>
   <div class="app-page-wrapper">
     <p *ngIf="isCorrect === undefined">
       Resolva a operação em seu caderno e depois digita a resposta aqui no
@@ -13,7 +13,7 @@
 
     <div *ngIf="isCorrect === false">
       <h2>Ops! 😕</h2>
-      <p>Sua reposta não está correta. Tente fazer este cálculo de novo 👍</p>
+      <p>Sua reposta não está correta. Tente fazer este cálculo de novo</p>
     </div>
 
     <div class="question-container">
