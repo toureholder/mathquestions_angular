@@ -22,63 +22,69 @@ export class SubtractionService {
     const cheaperTotal = Math.floor(Math.random() * (200 - 75 + 1)) + 75;
     const cheaperParte = Math.floor(Math.random() * (74 - 25 + 1)) + 25;
 
-    const textOption1 = `
-    ${subject.name} comprou ${object.gender === Gender.male ? 'um' : 'uma'} ${
-      object.name
-    } que custa ${total} reais e deu ${parte} reais de
-    entrada. Quanto falta para ${
-      subject.gender === Gender.male ? 'ele' : 'ela'
-    } pagar todo o valor ${object.gender === Gender.male ? 'do' : 'da'} ${
-      object.name
-    }?
-    `;
+    const option1: QuestionOption = {
+      text: `
+      ${subject.name} comprou ${object.gender === Gender.male ? 'um' : 'uma'} ${
+        object.name
+      } que custa ${total} reais e deu ${parte} reais de
+      entrada. Quanto falta para ${
+        subject.gender === Gender.male ? 'ele' : 'ela'
+      } pagar todo o valor ${object.gender === Gender.male ? 'do' : 'da'} ${
+        object.name
+      }?
+      `,
+      numbers: [total, parte],
+    };
 
-    const textOption2 = `
-    ${purchase.establishmentGender === Gender.male ? 'O' : 'A'} ${
-      purchase.establishment
-    } de ${subject.name} fez um pedido de ${total} ${
-      purchase.products
-    }. Com a pandemia e fechamento dos Correios, chegaram apenas ${parte} ${
-      purchase.products
-    }. ${purchase.productsGender === Gender.male ? 'Quantos' : 'Quantas'} ${
-      purchase.products
-    } faltam chegar?
-    `;
+    const option2: QuestionOption = {
+      text: `
+      ${purchase.establishmentGender === Gender.male ? 'O' : 'A'} ${
+        purchase.establishment
+      } de ${subject.name} fez um pedido de ${total} ${
+        purchase.products
+      }. Com a pandemia e fechamento dos Correios, chegaram apenas ${parte} ${
+        purchase.products
+      }. ${purchase.productsGender === Gender.male ? 'Quantos' : 'Quantas'} ${
+        purchase.products
+      } faltam chegar?
+      `,
+      numbers: [total, parte],
+    };
 
-    const textOption3 = `
-    ${subject.name} está ${
-      purchase.establishmentGender === Gender.male ? 'no' : 'na'
-    } ${purchase.establishment} e ${
-      subject.gender === Gender.male ? 'ele' : 'ela'
-    } quer comprar ${purchase.itemGender === Gender.male ? 'um' : 'uma'} ${
-      purchase.item
-    } que custa ${cheaperTotal} 
-    reais. Porém, ${
-      subject.gender === Gender.male ? 'ele' : 'ela'
-    } só tem ${cheaperParte} reais. Quanto dinheiro ${
-      subject.gender === Gender.male ? 'ele' : 'ela'
-    } terá que pedir emprestado 
-    do seus pais para conseguir comprar ${
-      purchase.itemGender === Gender.male ? 'o' : 'a'
-    } ${purchase.item}?
-    `;
+    const option3: QuestionOption = {
+      text: `
+      ${subject.name} está ${
+        purchase.establishmentGender === Gender.male ? 'no' : 'na'
+      } ${purchase.establishment} e ${
+        subject.gender === Gender.male ? 'ele' : 'ela'
+      } quer comprar ${purchase.itemGender === Gender.male ? 'um' : 'uma'} ${
+        purchase.item
+      } que custa ${cheaperTotal} 
+      reais. Porém, ${
+        subject.gender === Gender.male ? 'ele' : 'ela'
+      } só tem ${cheaperParte} reais. Quanto dinheiro ${
+        subject.gender === Gender.male ? 'ele' : 'ela'
+      } terá que pedir emprestado 
+      do seus pais para conseguir comprar ${
+        purchase.itemGender === Gender.male ? 'o' : 'a'
+      } ${purchase.item}?
+      `,
+      numbers: [cheaperTotal, cheaperParte],
+    };
 
-    const textOptions: string[] = [textOption1, textOption2, textOption3];
-
-    const numbersOptions: number[][] = [
-      [total, parte],
-      [total, parte],
-      [cheaperTotal, cheaperParte],
-    ];
-
-    const index = Math.floor(Math.random() * textOptions.length);
-
-    const numbers = numbersOptions[index];
+    const options: QuestionOption[] = [option1, option2, option3];
+    const index = Math.floor(Math.random() * options.length);
+    const option = options[index];
+    const numbers = option.numbers;
 
     return {
-      text: textOptions[index],
+      ...option,
       correctAnswer: numbers[0] - numbers[1],
-      numbers,
     };
   }
+}
+
+interface QuestionOption {
+  text: string;
+  numbers: number[];
 }
