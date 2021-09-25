@@ -379,3 +379,98 @@ export const randomMoreThingsQuestionData = (): MoreThingsQuestionData => {
 
   return pool[index];
 };
+
+export interface AddTwoThingsQuestionData {
+  actor: string;
+  actors: string;
+  actorGender: Gender;
+  passadoSingular: string;
+  passadoPlural: string;
+  things: string;
+  thingsGender: Gender;
+  place: string;
+}
+
+export const randomAddTwoThingsQuestionData = (): AddTwoThingsQuestionData => {
+  const pool: AddTwoThingsQuestionData[] = [
+    {
+      actor: 'tartaruga marinha',
+      actors: 'tartarugas marinhas',
+      actorGender: Gender.female,
+      passadoSingular: 'depositou',
+      passadoPlural: 'depositaram',
+      things: 'ovos',
+      thingsGender: Gender.male,
+      place: 'na areia da praia',
+    },
+    {
+      actor: 'vendedor',
+      actors: 'vendedores',
+      actorGender: Gender.male,
+      passadoSingular: 'vendeu',
+      passadoPlural: 'venderam',
+      things: 'brinquedos',
+      thingsGender: Gender.male,
+      place: 'no final de semana',
+    },
+    {
+      actor: 'construtora',
+      actors: 'construtoras',
+      actorGender: Gender.female,
+      passadoSingular: 'construiu',
+      passadoPlural: 'construiram',
+      things: 'casas',
+      thingsGender: Gender.female,
+      place: 'na cidade',
+    },
+    {
+      actor: 'família',
+      actors: 'famílias',
+      actorGender: Gender.female,
+      passadoSingular: 'gastou',
+      passadoPlural: 'gastaram',
+      things: 'reais',
+      thingsGender: Gender.female,
+      place: 'no shopping',
+    },
+  ];
+
+  const index = Math.floor(Math.random() * pool.length);
+
+  return pool[index];
+};
+
+export interface MoreAndMoreQuestionData {
+  place: string;
+  actors: string;
+  actorGender: Gender;
+}
+
+export const randomMoreAndMoreQuestionData = (): MoreAndMoreQuestionData => {
+  const pool: MoreAndMoreQuestionData[] = [
+    {
+      actors: 'araras',
+      actorGender: Gender.female,
+      place: 'Em uma reserva ambiental',
+    },
+    {
+      actors: 'alunos',
+      actorGender: Gender.male,
+      place: 'Em uma escola',
+    },
+    {
+      actors: 'imigrantes',
+      actorGender: Gender.male,
+      place: 'Em em país',
+    },
+    {
+      actors: 'visitantes',
+      actorGender: Gender.male,
+      place: 'Um dia no zoolôgico',
+    },
+  ];
+
+  const index = Math.floor(Math.random() * pool.length);
+
+  return pool[index];
+};

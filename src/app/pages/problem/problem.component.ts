@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AditionService } from 'src/app/core/services/adition/adition.service';
 import { SubtractionService } from 'src/app/core/services/subtraction/subtraction.service';
 import { OperationComponent } from 'src/app/shared/models/operation-component.interface';
 import { MathOperation } from 'src/app/shared/models/operation.enum';
@@ -16,7 +17,10 @@ export class ProblemComponent implements OnInit, OperationComponent {
   isCorrect?: boolean | undefined;
   userAnswer?: number;
 
-  constructor(private subractionService: SubtractionService) {}
+  constructor(
+    private subractionService: SubtractionService,
+    private aditionService: AditionService
+  ) {}
 
   ngOnInit(): void {
     this.generateNewQestion();
@@ -27,8 +31,15 @@ export class ProblemComponent implements OnInit, OperationComponent {
   }
 
   generateNewQestion(): void {
-    this.problem = this.subractionService.getProblem();
-    this.numbers = this.problem.numbers;
+    const pool = [
+      this.subractionService.getProblem(),
+      this.aditionService.getProblem(),
+    ];
+
+    const index = Math.floor(Math.random() * pool.length);
+
+    this.problem = pool[index];
+
     this.isCorrect = undefined;
     this.userAnswer = undefined;
   }

@@ -7,11 +7,12 @@ import {
   randomPurchase,
   randomSubject,
 } from 'src/app/pages/problem/models/question-subject.interface';
+import { ProblemService } from '../problem-service.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SubtractionService {
+export class SubtractionService implements ProblemService {
   getProblem(): Problem {
     const subject = randomSubject();
     const object = randomObject();
@@ -24,7 +25,7 @@ export class SubtractionService {
     const cheaperTotal = Math.floor(Math.random() * (200 - 75 + 1)) + 75;
     const cheaperParte = Math.floor(Math.random() * (74 - 25 + 1)) + 25;
 
-    const option1: QuestionOption = {
+    const option1: Problem = {
       text: `
       ${subject.name} comprou ${object.gender === Gender.male ? 'um' : 'uma'} ${
         object.name
@@ -35,10 +36,10 @@ export class SubtractionService {
         object.name
       }?
       `,
-      numbers: [total, parte],
+      correctAnswer: total - parte,
     };
 
-    const option2: QuestionOption = {
+    const option2: Problem = {
       text: `
       ${purchase.establishmentGender === Gender.male ? 'O' : 'A'} ${
         purchase.establishment
@@ -50,10 +51,10 @@ export class SubtractionService {
         purchase.products
       } faltam chegar?
       `,
-      numbers: [total, parte],
+      correctAnswer: total - parte,
     };
 
-    const option3: QuestionOption = {
+    const option3: Problem = {
       text: `
       ${subject.name} está ${
         purchase.establishmentGender === Gender.male ? 'no' : 'na'
@@ -71,10 +72,10 @@ export class SubtractionService {
         purchase.itemGender === Gender.male ? 'o' : 'a'
       } ${purchase.item}?
       `,
-      numbers: [cheaperTotal, cheaperParte],
+      correctAnswer: cheaperTotal - cheaperParte,
     };
 
-    const option4: QuestionOption = {
+    const option4: Problem = {
       text: `
       Até ${more.ago} havia somente ${parte} ${more.things} ${more.place}. ${
         more.action
@@ -84,22 +85,12 @@ export class SubtractionService {
         more.thingsGender === Gender.male ? 'Quantos' : 'Quantas'
       } ${more.things} foram ${more.done}?
       `,
-      numbers: [total, parte],
+      correctAnswer: total - parte,
     };
 
-    const options: QuestionOption[] = [option1, option2, option3, option4];
+    const options: Problem[] = [option1, option2, option3, option4];
     const index = Math.floor(Math.random() * options.length);
-    const option = options[index];
-    const numbers = option.numbers;
 
-    return {
-      ...option,
-      correctAnswer: numbers[0] - numbers[1],
-    };
+    return options[index];
   }
-}
-
-interface QuestionOption {
-  text: string;
-  numbers: number[];
 }

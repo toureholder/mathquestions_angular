@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AditionService } from 'src/app/core/services/adition/adition.service';
 import { SubtractionService } from 'src/app/core/services/subtraction/subtraction.service';
 import { Problem } from './models/problem.interface';
 
@@ -9,9 +10,14 @@ describe('ProblemComponent', () => {
   let component: ProblemComponent;
   let fixture: ComponentFixture<ProblemComponent>;
   let mockSubtractionService: jasmine.SpyObj<SubtractionService>;
+  let mockAditionService: jasmine.SpyObj<AditionService>;
 
   beforeEach(async () => {
     mockSubtractionService = jasmine.createSpyObj('mockSubtractionService', [
+      'getProblem',
+    ]);
+
+    mockAditionService = jasmine.createSpyObj('mockAditionService', [
       'getProblem',
     ]);
 
@@ -22,6 +28,10 @@ describe('ProblemComponent', () => {
         {
           provide: SubtractionService,
           useValue: mockSubtractionService,
+        },
+        {
+          provide: AditionService,
+          useValue: mockAditionService,
         },
       ],
     }).compileComponents();
@@ -50,21 +60,27 @@ describe('ProblemComponent', () => {
   });
 
   describe('#generateNewQestion', () => {
-    it('should invoke subtraction service to get problem', () => {
+    it('should invoke services to get problems', () => {
       // Given
-      const problem: Problem = {
+      const subtractionProblem: Problem = {
         text: 'Lorem ipsum dolor',
-        correctAnswer: 50,
-        numbers: [100, 50],
+        correctAnswer: 10,
       };
 
-      mockSubtractionService.getProblem.and.returnValue(problem);
+      const aditionProblem: Problem = {
+        text: 'Lorem ipsum dolor',
+        correctAnswer: 20,
+      };
+
+      mockSubtractionService.getProblem.and.returnValue(subtractionProblem);
+      mockAditionService.getProblem.and.returnValue(aditionProblem);
 
       // When
       component.generateNewQestion();
 
       // Then
-      expect(component.problem).toEqual(problem);
+      expect(mockSubtractionService.getProblem).toHaveBeenCalled();
+      expect(mockAditionService.getProblem).toHaveBeenCalled();
     });
   });
 
@@ -74,7 +90,6 @@ describe('ProblemComponent', () => {
       component.problem = {
         text: 'Lorem ipsum dolor',
         correctAnswer: 80,
-        numbers: [100, 20],
       };
 
       // When
@@ -89,7 +104,6 @@ describe('ProblemComponent', () => {
       component.problem = {
         text: 'Lorem ipsum dolor',
         correctAnswer: 80,
-        numbers: [100, 20],
       };
 
       // When
