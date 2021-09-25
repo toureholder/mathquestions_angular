@@ -329,3 +329,53 @@ export const randomPurchase = (): QuestionEstablishmentSubject => {
 
   return pool[index];
 };
+
+export interface MoreThingsQuestionData {
+  ago: string;
+  place: string;
+  things: string;
+  thingsGender: Gender;
+  action: string;
+  done: string;
+}
+
+export const randomMoreThingsQuestionData = (): MoreThingsQuestionData => {
+  const pool: MoreThingsQuestionData[] = [
+    {
+      ago: 'mês passado',
+      place: 'no parque da cidade',
+      things: 'árvores',
+      thingsGender: Gender.female,
+      action: 'Um grupo comunitário plantou',
+      done: 'plantadas',
+    },
+    {
+      ago: 'semana passada',
+      things: 'brinquedos',
+      thingsGender: Gender.male,
+      place: 'na loja de brinquedos',
+      action: 'O gerente da loja comprou',
+      done: 'comprados',
+    },
+    {
+      ago: 'ano passado',
+      things: 'prédios',
+      thingsGender: Gender.male,
+      place: 'no bairro',
+      action: 'O prefeito mandou constuir',
+      done: 'construídos',
+    },
+    {
+      ago: 'ontém',
+      things: 'revistas',
+      thingsGender: Gender.female,
+      place: 'na banca de jornais',
+      action: 'O entregador entregou',
+      done: 'entregues',
+    },
+  ];
+
+  const index = Math.floor(Math.random() * pool.length);
+
+  return pool[index];
+};

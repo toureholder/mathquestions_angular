@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Gender } from 'src/app/pages/problem/models/gender.interface';
 import { Problem } from 'src/app/pages/problem/models/problem.interface';
 import {
+  randomMoreThingsQuestionData,
   randomObject,
   randomPurchase,
   randomSubject,
@@ -15,6 +16,7 @@ export class SubtractionService {
     const subject = randomSubject();
     const object = randomObject();
     const purchase = randomPurchase();
+    const more = randomMoreThingsQuestionData();
 
     const total = Math.floor(Math.random() * (2000 - 750 + 1)) + 750;
     const parte = Math.floor(Math.random() * (749 - 50 + 1)) + 50;
@@ -72,7 +74,20 @@ export class SubtractionService {
       numbers: [cheaperTotal, cheaperParte],
     };
 
-    const options: QuestionOption[] = [option1, option2, option3];
+    const option4: QuestionOption = {
+      text: `
+      Até ${more.ago} havia somente ${parte} ${more.things} ${more.place}. ${
+        more.action
+      } mais ${more.thingsGender === Gender.male ? 'alguns' : 'algumas'} ${
+        more.things
+      }. Se hoje há ${total} ${more.things} ${more.place}. ${
+        more.thingsGender === Gender.male ? 'Quantos' : 'Quantas'
+      } ${more.things} foram ${more.done}?
+      `,
+      numbers: [total, parte],
+    };
+
+    const options: QuestionOption[] = [option1, option2, option3, option4];
     const index = Math.floor(Math.random() * options.length);
     const option = options[index];
     const numbers = option.numbers;
