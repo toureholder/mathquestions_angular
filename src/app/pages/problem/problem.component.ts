@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AditionService } from 'src/app/core/services/adition/adition.service';
+import { MultiplicationService } from 'src/app/core/services/multiplication/multiplication.service';
 import { SubtractionService } from 'src/app/core/services/subtraction/subtraction.service';
 import { OperationComponent } from 'src/app/shared/models/operation-component.interface';
 import { MathOperation } from 'src/app/shared/models/operation.enum';
@@ -19,7 +20,8 @@ export class ProblemComponent implements OnInit, OperationComponent {
 
   constructor(
     private subractionService: SubtractionService,
-    private aditionService: AditionService
+    private aditionService: AditionService,
+    private multiplicationService: MultiplicationService
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +36,7 @@ export class ProblemComponent implements OnInit, OperationComponent {
     const pool = [
       this.subractionService.getProblem(),
       this.aditionService.getProblem(),
+      this.multiplicationService.getProblem(),
     ];
 
     const index = Math.floor(Math.random() * pool.length);

@@ -463,14 +463,65 @@ export const randomMoreAndMoreQuestionData = (): MoreAndMoreQuestionData => {
       actorGender: Gender.male,
       place: 'Em em país',
     },
-    {
-      actors: 'visitantes',
-      actorGender: Gender.male,
-      place: 'Um dia no zoolôgico',
-    },
   ];
 
   const index = Math.floor(Math.random() * pool.length);
 
   return pool[index];
 };
+
+export interface MultiplicationQuestionData {
+  place: string;
+  actor: string;
+  actors: string;
+  futureSubjunctive: string;
+  futurePlural: string;
+  thing: string;
+  thingGender: Gender;
+}
+
+export const randomMultiplicationQuestionData =
+  (): MultiplicationQuestionData => {
+    const pool: MultiplicationQuestionData[] = [
+      {
+        actor: 'criança',
+        actors: 'crianças',
+        thing: 'bolas de sorvete',
+        thingGender: Gender.female,
+        place: 'Em uma sorveteria',
+        futureSubjunctive: 'comer',
+        futurePlural: 'comerão',
+      },
+      {
+        actor: 'participante',
+        actors: 'participantes',
+        thing: 'quilômetros',
+        thingGender: Gender.male,
+        place: 'Em um festival de natação',
+        futureSubjunctive: 'nadar',
+        futurePlural: 'nadarão',
+      },
+      {
+        actor: 'jogador',
+        actors: 'jogadores',
+        thing: 'gols',
+        thingGender: Gender.male,
+        place: 'Em uma temporada do campeonato distrital de futsal',
+        futureSubjunctive: 'marcar',
+        futurePlural: 'marcarão',
+      },
+      {
+        actor: 'estudante',
+        actors: 'estudantes',
+        thing: 'desenhos',
+        thingGender: Gender.male,
+        place: 'Em um turma',
+        futureSubjunctive: 'fizer',
+        futurePlural: 'farão',
+      },
+    ];
+
+    const index = Math.floor(Math.random() * pool.length);
+
+    return pool[index];
+  };

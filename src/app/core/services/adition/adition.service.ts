@@ -15,9 +15,9 @@ export class AditionService implements ProblemService {
     const addTwoT = randomAddTwoThingsQuestionData();
     const moreAndMore = randomMoreAndMoreQuestionData();
 
-    const parte1 = Math.floor(Math.random() * (1000 - 0 + 1)) + 0;
-    const parte2 = Math.floor(Math.random() * (1000 - 0 + 1)) + 0;
-    const parte3 = Math.floor(Math.random() * (1000 - 0 + 1)) + 0;
+    const parte1 = Math.floor(Math.random() * (1000 - 10 + 1)) + 0;
+    const parte2 = Math.floor(Math.random() * (1000 - 10 + 1)) + 0;
+    const parte3 = Math.floor(Math.random() * (1000 - 10 + 1)) + 0;
 
     const option1: Problem = {
       text: `
