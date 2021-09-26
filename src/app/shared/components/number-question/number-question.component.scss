@@ -1,6 +1,7 @@
 #questionPage {
   position: relative;
   font-family: 'Patrick Hand', cursive;
+  min-height: calc(100% - calc(var(--app-toolbar-height) * 2));
 }
 
 h2 {

@@ -4,9 +4,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainComponent } from './layout/main/main.component';
 import { RouterModule } from '@angular/router';
 import { NavComponent } from './layout/nav/nav.component';
+import { FooterComponent } from './layout/footer/footer.component';
 
 @NgModule({
-  declarations: [NavComponent, MainComponent],
+  declarations: [NavComponent, MainComponent, FooterComponent],
   imports: [
     // vendor
     BrowserModule,

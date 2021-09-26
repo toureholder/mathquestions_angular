@@ -1,0 +1,23 @@
+footer {
+  height: var(--app-toolbar-height);
+  border-top: 1px solid var(--app-divider-color);
+}
+
+.app-page-wrapper {
+  padding: 0 2.4rem;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+p {
+  margin: 0;
+}
+
+a,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
