@@ -430,7 +430,7 @@ export const randomAddTwoThingsQuestionData = (): AddTwoThingsQuestionData => {
       passadoSingular: 'gastou',
       passadoPlural: 'gastaram',
       things: 'reais',
-      thingsGender: Gender.female,
+      thingsGender: Gender.male,
       place: 'no shopping',
     },
   ];
@@ -515,7 +515,7 @@ export const randomMultiplicationQuestionData =
         actors: 'estudantes',
         thing: 'desenhos',
         thingGender: Gender.male,
-        place: 'Em um turma',
+        place: 'Em uma turma',
         futureSubjunctive: 'fizer',
         futurePlural: 'farão',
       },
