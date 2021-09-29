@@ -1,0 +1,58 @@
+import { TestBed } from '@angular/core/testing';
+import {
+  fakeQuestionConfig,
+  QuestionConfig,
+} from 'src/app/shared/models/question-config.interface';
+
+import { QuestionConfigService } from './question-config.service';
+
+describe('QuestionConfigService', () => {
+  let service: QuestionConfigService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(QuestionConfigService);
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+
+  describe('#getConfig', () => {
+    it('should return a config', () => {
+      expect(service.getConfig()).toBeDefined();
+    });
+  });
+
+  describe('#setConfig', () => {
+    it('should set config', () => {
+      // Given
+      const config = fakeQuestionConfig;
+
+      // When
+      service.setConfig(config);
+
+      // Then
+      expect(service.getConfig()).toEqual(config);
+    });
+
+    it('should update multiplication maxValues when multiplication maxNumberOfNumbers changes', () => {
+      // Given
+      const newConfig = JSON.parse(
+        JSON.stringify(fakeQuestionConfig)
+      ) as QuestionConfig;
+
+      const number = 5;
+
+      newConfig.multiplication.maxNumberOfNumbers = number;
+
+      // When
+      service.setConfig(newConfig);
+
+      // Then
+      expect(service.getConfig().multiplication.maxValues.length).toEqual(
+        number
+      );
+    });
+  });
+});

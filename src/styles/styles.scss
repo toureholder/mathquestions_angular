@@ -38,7 +38,7 @@ body {
   font-size: 1.8rem;
 }
 
-input {
+input.answer {
   border: 2px solid rgba(0, 0, 0, 0.26);
   border-radius: 2px;
   font-size: 4rem;
@@ -59,4 +59,24 @@ input.wrong {
   width: 100%;
   height: 1px;
   background-color: var(--app-divider-color, lightgray);
+}
+
+.app-center-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.mat-form-field.no-padding {
+  .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0;
+  }
+
+  .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
+}
+
+button.black-button {
+  color: black;
 }

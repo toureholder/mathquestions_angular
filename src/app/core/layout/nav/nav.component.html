@@ -5,5 +5,13 @@
       <span class="web">.web</span>
       <span class="app">.app</span>
     </a>
+
+    <div class="spacer"></div>
+
+    <a [routerLink]="'/config'" *ngIf="showConfigButton">
+      <button mat-button class="black-button">
+        <span class="material-icons"> settings </span>
+      </button>
+    </a>
   </div>
 </nav>

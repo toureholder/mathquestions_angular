@@ -7,6 +7,12 @@ nav {
 .app-page-wrapper {
   height: 100%;
   padding: 0 2.4rem 0 2.4rem;
+  display: flex;
+  align-items: center;
+}
+
+.spacer {
+  flex: 1;
 }
 
 .app-brand {

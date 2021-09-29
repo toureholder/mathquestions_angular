@@ -1,0 +1,76 @@
+#ConfigPage {
+  font-family: 'Patrick Hand', cursive;
+  padding-bottom: calc(var(--app-default-spacing) * 3);
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Patrick Hand', cursive;
+}
+
+h2 {
+  margin: 0 0 var(--app-default-spacing);
+}
+
+.config-h2-vertical-divider {
+  width: 100%;
+  height: 1px;
+  background-color: black;
+}
+
+.confg-item-container {
+  border: 1px solid var(--app-light-gray);
+  padding: var(--app-default-spacing);
+  border-radius: var(--app-default-border-radius);
+  margin-bottom: var(--app-default-spacing);
+}
+
+.confg-item-q-and-a {
+  display: flex;
+
+  .question {
+    flex: 3;
+    margin: 0;
+    font-weight: bold;
+  }
+
+  .value {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--app-light-gray);
+    border-radius: var(--app-default-border-radius);
+    margin-left: var(--app-default-spacing);
+
+    span {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+  }
+}
+
+.mat-form-field {
+  flex: 1;
+  width: 6rem;
+  min-width: 0;
+}
+
+.mat-flat-button,
+.mat-stroked-button {
+  width: 100%;
+  height: 48px;
+}
+
+.mat-slider {
+  width: 100%;
+}
+
+.section.disabled {
+  color: lightgray;
+
+  .config-h2-vertical-divider {
+    background-color: lightgray;
+  }
+}

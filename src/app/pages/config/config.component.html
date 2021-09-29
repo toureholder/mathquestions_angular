@@ -1,0 +1,223 @@
+<div id="ConfigPage" class="app-page-wrapper">
+  <h1>Configuração</h1>
+
+  <p>Use este valores para customizar a dificuldade das perguntas.</p>
+
+  <div class="app-vertical-spacer"></div>
+
+  <div id="adition-section">
+    <h2>Adição</h2>
+
+    <div class="config-h2-vertical-divider"></div>
+
+    <div class="app-vertical-spacer"></div>
+
+    <div class="confg-item-container">
+      <div class="confg-item-q-and-a">
+        <h3 class="question">
+          Até quantos números podem fazer parte de uma conta de adição?
+        </h3>
+        <div class="value">
+          <span>{{ config.adition.maxNumberOfNumbers }}</span>
+        </div>
+      </div>
+
+      <div class="app-vertical-spacer"></div>
+
+      <mat-slider
+        max="10"
+        min="2"
+        step="1"
+        tickInterval="1"
+        [thumbLabel]="true"
+        [(ngModel)]="config.adition.maxNumberOfNumbers"
+        (ngModelChange)="onChanges()"
+      ></mat-slider>
+
+      <p>Por exemplo, 6 + 4 + 7 é uma conta com 3 números.</p>
+    </div>
+
+    <div class="confg-item-container">
+      <div class="confg-item-q-and-a">
+        <h3 class="question">
+          Qual é o valor máximo de cada número de adição?
+        </h3>
+        <div class="value">
+          <span>{{ config.adition.maxValue }}</span>
+        </div>
+      </div>
+
+      <div class="app-vertical-spacer"></div>
+
+      <mat-slider
+        max="10000"
+        min="10"
+        step="10"
+        tickInterval="1"
+        [thumbLabel]="true"
+        [(ngModel)]="config.adition.maxValue"
+        (ngModelChange)="onChanges()"
+      ></mat-slider>
+
+      <p>
+        Por exemplo, 4 + 7 + 10 é uma possibilidade quando o valor máximo for
+        10.
+      </p>
+    </div>
+  </div>
+
+  <div class="app-vertical-spacer"></div>
+  <div class="app-vertical-spacer"></div>
+  <div class="app-vertical-spacer"></div>
+
+  <div id="subtraction-section">
+    <h2>Subtraction</h2>
+
+    <div class="config-h2-vertical-divider"></div>
+
+    <div class="app-vertical-spacer"></div>
+
+    <div class="confg-item-container">
+      <div class="confg-item-q-and-a">
+        <h3 class="question">
+          Até quantos números podem fazer parte de uma conta de subtração?
+        </h3>
+        <div class="value">
+          <span>{{ config.subtraction.maxNumberOfNumbers }}</span>
+        </div>
+      </div>
+
+      <div class="app-vertical-spacer"></div>
+
+      <mat-slider
+        max="10"
+        min="2"
+        step="1"
+        tickInterval="1"
+        [thumbLabel]="true"
+        [(ngModel)]="config.subtraction.maxNumberOfNumbers"
+        (ngModelChange)="onChanges()"
+      ></mat-slider>
+
+      <p>Por exemplo, 9 - 5 - 3 é uma conta com 3 números.</p>
+    </div>
+
+    <div class="confg-item-container">
+      <div class="confg-item-q-and-a">
+        <h3 class="question">
+          Qual é o valor máximo do maior número da conta de subtração?
+        </h3>
+        <div class="value">
+          <span>{{ config.subtraction.maxValue }}</span>
+        </div>
+      </div>
+
+      <div class="app-vertical-spacer"></div>
+
+      <mat-slider
+        max="10000"
+        min="10"
+        step="10"
+        tickInterval="1"
+        [thumbLabel]="true"
+        [(ngModel)]="config.subtraction.maxValue"
+        (ngModelChange)="onChanges()"
+      ></mat-slider>
+
+      <p>
+        Por exemplo, 10 - 7 - 4 é uma possibilidade quando o valor máximo for
+        10.
+      </p>
+    </div>
+  </div>
+
+  <div class="app-vertical-spacer"></div>
+  <div class="app-vertical-spacer"></div>
+  <div class="app-vertical-spacer"></div>
+
+  <div id="multiplication-section">
+    <h2>Multiplicação</h2>
+
+    <div class="config-h2-vertical-divider"></div>
+
+    <div class="app-vertical-spacer"></div>
+
+    <div class="confg-item-container">
+      <div class="confg-item-q-and-a">
+        <h3 class="question">
+          Até quantos números podem fazer parte de uma conta de multiplicação?
+        </h3>
+        <div class="value">
+          <span>{{ config.multiplication.maxNumberOfNumbers }}</span>
+        </div>
+      </div>
+
+      <div class="app-vertical-spacer"></div>
+
+      <mat-slider
+        max="10"
+        min="2"
+        step="1"
+        tickInterval="1"
+        [thumbLabel]="true"
+        [(ngModel)]="config.multiplication.maxNumberOfNumbers"
+        (ngModelChange)="onChanges()"
+      ></mat-slider>
+
+      <p>Por exemplo, 6 x 4 x 7 é uma conta com 3 números.</p>
+    </div>
+
+    <div class="app-vertical-spacer"></div>
+
+    <div
+      class="confg-item-container"
+      *ngFor="let value of config.multiplication.maxValues; index as i"
+    >
+      <div class="confg-item-q-and-a">
+        <h3 class="question">
+          Qual é o valor máximo do {{ i + 1 }}º número da conta de
+          multiplicação?
+        </h3>
+        <div class="value">
+          <span>{{ config.multiplication.maxValues[i] }}</span>
+        </div>
+      </div>
+
+      <div class="app-vertical-spacer"></div>
+
+      <mat-slider
+        max="100"
+        min="1"
+        step="1"
+        tickInterval="1"
+        [thumbLabel]="true"
+        [(ngModel)]="config.multiplication.maxValues[i]"
+        (ngModelChange)="onChanges()"
+      ></mat-slider>
+    </div>
+  </div>
+
+  <div class="app-vertical-spacer"></div>
+  <div class="app-vertical-spacer"></div>
+  <div class="app-vertical-spacer"></div>
+
+  <div id="problems-section" class="section disabled">
+    <h2>Probleminhas</h2>
+
+    <div class="config-h2-vertical-divider"></div>
+
+    <div class="app-vertical-spacer"></div>
+
+    <p>O probleminhas não são configuráveis (ainda).</p>
+  </div>
+
+  <div class="app-vertical-spacer"></div>
+  <div class="app-vertical-spacer"></div>
+
+  <a [routerLink]="'/'">
+    <button mat-stroked-button color="primary">
+      Voltar á página inicial
+      <span class="material-icons-outlined"> home </span>
+    </button>
+  </a>
+</div>

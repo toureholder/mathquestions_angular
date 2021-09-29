@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { QuestionConfigService } from 'src/app/core/services/question-config/question-config.service';
+import { fakeQuestionConfig } from 'src/app/shared/models/question-config.interface';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 import { MultiplicationComponent } from './multiplication.component';
@@ -7,15 +9,27 @@ import { MultiplicationComponent } from './multiplication.component';
 describe('MultiplicationComponent', () => {
   let component: MultiplicationComponent;
   let fixture: ComponentFixture<MultiplicationComponent>;
+  let mockQuestionConfigService: jasmine.SpyObj<QuestionConfigService>;
+  const multiplicationConfig = fakeQuestionConfig.multiplication;
 
   beforeEach(async () => {
+    mockQuestionConfigService = jasmine.createSpyObj(
+      'mockQuestionConfigService',
+      ['getConfig']
+    );
+
     await TestBed.configureTestingModule({
       declarations: [MultiplicationComponent],
       imports: [SharedModule, RouterTestingModule],
+      providers: [
+        { provide: QuestionConfigService, useValue: mockQuestionConfigService },
+      ],
     }).compileComponents();
   });
 
   beforeEach(() => {
+    mockQuestionConfigService.getConfig.and.returnValue(fakeQuestionConfig);
+
     fixture = TestBed.createComponent(MultiplicationComponent);
     component = fixture.componentInstance;
   });
@@ -67,7 +81,9 @@ describe('MultiplicationComponent', () => {
       component.generateNewQestion();
 
       // Then
-      expect(component.numbers.length).toEqual(2);
+      expect(component.numbers.length).toBeLessThanOrEqual(
+        multiplicationConfig.maxNumberOfNumbers
+      );
     });
 
     it('should reset isCorrect', () => {

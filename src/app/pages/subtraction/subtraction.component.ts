@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { QuestionConfigService } from 'src/app/core/services/question-config/question-config.service';
 import { OperationComponent } from 'src/app/shared/models/operation-component.interface';
 import { MathOperation } from 'src/app/shared/models/operation.enum';
 
@@ -9,8 +10,11 @@ import { MathOperation } from 'src/app/shared/models/operation.enum';
 })
 export class SubtractionComponent implements OnInit, OperationComponent {
   operation = MathOperation.Subtraction;
-  isCorrect?: boolean | undefined;
   numbers: number[] = [];
+  isCorrect?: boolean | undefined;
+  private minNumberOfNumbers = 2;
+
+  constructor(private questionConfigService: QuestionConfigService) {}
 
   ngOnInit(): void {
     this.generateNewQestion();
@@ -21,34 +25,43 @@ export class SubtractionComponent implements OnInit, OperationComponent {
     this.isCorrect = answer === diff;
   }
 
-  generateNewQestion(forcedNumbers?: number[]): void {
-    const numberOfnumbers = 2;
-    const maxNumberValue = 9999;
+  generateNewQestion(): void {
+    let randomNumbers: number[] = [];
+    let diff = -1;
 
-    const randomNumbers: number[] = [];
-
-    for (let i = 0; i < numberOfnumbers; i++) {
-      const num = Math.floor(Math.random() * maxNumberValue) + 1;
-      randomNumbers.push(num);
+    while (diff < 0) {
+      randomNumbers = this.getRandomNumbers();
+      diff = randomNumbers.reduce((a: number, b: number) => a - b);
     }
 
-    const numbers = forcedNumbers || randomNumbers;
+    randomNumbers.sort(this.descending);
 
-    numbers.sort(this.descending);
-
-    this.numbers = numbers;
+    this.numbers = randomNumbers;
     this.isCorrect = undefined;
   }
 
+  private getRandomNumbers(): number[] {
+    const subtractionConfig =
+      this.questionConfigService.getConfig().subtraction;
+
+    const minQuantity = this.minNumberOfNumbers;
+    const maxQuantity = subtractionConfig.maxNumberOfNumbers;
+    const maxValue = subtractionConfig.maxValue;
+
+    const quantity =
+      Math.floor(Math.random() * (maxQuantity - minQuantity + 1)) + minQuantity;
+
+    const randomNumbers: number[] = [];
+
+    for (let i = 0; i < quantity; i++) {
+      const num = Math.floor(Math.random() * maxValue) + 1;
+      randomNumbers.push(num);
+    }
+
+    return randomNumbers;
+  }
+
   private descending(a: number, b: number): number {
-    if (b < a) {
-      return -1;
-    }
-
-    if (a < b) {
-      return 1;
-    }
-
-    return 0;
+    return b < a ? -1 : a < b ? 1 : 0;
   }
 }

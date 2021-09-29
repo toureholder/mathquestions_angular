@@ -1,20 +1,34 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { QuestionConfigService } from 'src/app/core/services/question-config/question-config.service';
+import { fakeQuestionConfig } from 'src/app/shared/models/question-config.interface';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SubtractionComponent } from './subtraction.component';
 
 describe('SubtractionComponent', () => {
   let component: SubtractionComponent;
   let fixture: ComponentFixture<SubtractionComponent>;
+  let mockQuestionConfigService: jasmine.SpyObj<QuestionConfigService>;
+  const subtractionConfig = fakeQuestionConfig.subtraction;
 
   beforeEach(async () => {
+    mockQuestionConfigService = jasmine.createSpyObj(
+      'mockQuestionConfigService',
+      ['getConfig']
+    );
+
     await TestBed.configureTestingModule({
       declarations: [SubtractionComponent],
       imports: [SharedModule, RouterTestingModule],
+      providers: [
+        { provide: QuestionConfigService, useValue: mockQuestionConfigService },
+      ],
     }).compileComponents();
   });
 
   beforeEach(() => {
+    mockQuestionConfigService.getConfig.and.returnValue(fakeQuestionConfig);
+
     fixture = TestBed.createComponent(SubtractionComponent);
     component = fixture.componentInstance;
   });
@@ -66,31 +80,17 @@ describe('SubtractionComponent', () => {
       component.generateNewQestion();
 
       // Then
-      expect(component.numbers.length).toEqual(2);
+      expect(component.numbers.length).toBeLessThanOrEqual(
+        subtractionConfig.maxNumberOfNumbers
+      );
     });
 
     it('should correctly order numbers when the first is larger than the second', () => {
       // When
-      component.generateNewQestion([100, 99]);
+      component.generateNewQestion();
 
       // Then
       expect(component.numbers[0]).toBeGreaterThanOrEqual(component.numbers[1]);
-    });
-
-    it('should correctly order numbers when the second is larger than the first', () => {
-      // When
-      component.generateNewQestion([99, 100]);
-
-      // Then
-      expect(component.numbers[0]).toBeGreaterThanOrEqual(component.numbers[1]);
-    });
-
-    it('should not order equal numbers', () => {
-      // When
-      component.generateNewQestion([99, 99]);
-
-      // Then
-      expect(component.numbers[0]).toEqual(component.numbers[1]);
     });
 
     it('should reset isCorrect', () => {

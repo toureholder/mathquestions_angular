@@ -50,7 +50,11 @@
               name="answer"
               data-test="user-answer"
               [ngClass]="
-                isCorrect === undefined ? '' : isCorrect ? 'correct' : 'wrong'
+                isCorrect === undefined
+                  ? 'answer'
+                  : isCorrect
+                  ? 'correct answer'
+                  : 'wrong answer'
               "
             />
 
@@ -82,7 +86,7 @@
 
         <a [routerLink]="'/'">
           <button mat-stroked-button color="primary">
-            Página incial <span class="material-icons-outlined"> home </span>
+            Página inicial <span class="material-icons-outlined"> home </span>
           </button>
         </a>
 

@@ -5,6 +5,7 @@ import { MainComponent } from './layout/main/main.component';
 import { RouterModule } from '@angular/router';
 import { NavComponent } from './layout/nav/nav.component';
 import { FooterComponent } from './layout/footer/footer.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [NavComponent, MainComponent, FooterComponent],
@@ -13,6 +14,7 @@ import { FooterComponent } from './layout/footer/footer.component';
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule,
+    MatButtonModule,
   ],
   exports: [
     // modules
