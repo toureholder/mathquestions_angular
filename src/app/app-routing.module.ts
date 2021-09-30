@@ -31,8 +31,16 @@ const routes: Routes = [
         (m) => m.MultiplicationModule
       ),
   },
-  { path: 'problem', loadChildren: () => import('./pages/problem/problem.module').then(m => m.ProblemModule) },
-  { path: 'config', loadChildren: () => import('./pages/config/config.module').then(m => m.ConfigModule) },
+  {
+    path: 'problem',
+    loadChildren: () =>
+      import('./pages/problem/problem.module').then((m) => m.ProblemModule),
+  },
+  {
+    path: 'config',
+    loadChildren: () =>
+      import('./pages/config/config.module').then((m) => m.ConfigModule),
+  },
   {
     path: '**',
     redirectTo: 'home',
