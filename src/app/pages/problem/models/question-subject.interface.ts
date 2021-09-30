@@ -461,7 +461,7 @@ export const randomMoreAndMoreQuestionData = (): MoreAndMoreQuestionData => {
     {
       actors: 'imigrantes',
       actorGender: Gender.male,
-      place: 'Em em país',
+      place: 'Em um país',
     },
   ];
 
