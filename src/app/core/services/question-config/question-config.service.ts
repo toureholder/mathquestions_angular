@@ -22,6 +22,13 @@ export class QuestionConfigService {
   }
 
   setConfig(newConfig: QuestionConfig): void {
+    this.config = this.addMultiplicationMaxValues(newConfig);
+    this.saveToPreferences(this.config);
+  }
+
+  private addMultiplicationMaxValues(
+    newConfig: QuestionConfig
+  ): QuestionConfig {
     const howManyNewMultiplicationNumbers =
       newConfig.multiplication.maxNumberOfNumbers -
       this.config.multiplication.maxNumberOfNumbers;
@@ -55,8 +62,7 @@ export class QuestionConfigService {
       newConfig.multiplication.maxValues = newMaxValues;
     }
 
-    this.config = newConfig;
-    this.saveToPreferences(this.config);
+    return newConfig;
   }
 
   private saveToPreferences(config: QuestionConfig): void {

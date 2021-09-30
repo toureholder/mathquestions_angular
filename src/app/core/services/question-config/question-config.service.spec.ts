@@ -36,8 +36,35 @@ describe('QuestionConfigService', () => {
       expect(service.getConfig()).toEqual(config);
     });
 
-    it('should update multiplication maxValues when multiplication maxNumberOfNumbers changes', () => {
+    it('should update multiplication maxValues when multiplication maxNumberOfNumbers decreases', () => {
       // Given
+      const config = fakeQuestionConfig;
+
+      service.setConfig(config);
+
+      const newConfig = JSON.parse(
+        JSON.stringify(fakeQuestionConfig)
+      ) as QuestionConfig;
+
+      const number = 1;
+
+      newConfig.multiplication.maxNumberOfNumbers = number;
+
+      // When
+      service.setConfig(newConfig);
+
+      // Then
+      expect(service.getConfig().multiplication.maxValues.length).toEqual(
+        number
+      );
+    });
+
+    it('should update multiplication maxValues when multiplication maxNumberOfNumbers increases', () => {
+      // Given
+      const config = fakeQuestionConfig;
+
+      service.setConfig(config);
+
       const newConfig = JSON.parse(
         JSON.stringify(fakeQuestionConfig)
       ) as QuestionConfig;
