@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { TestUtil } from '@testing/test-util';
 import {
   fakeQuestionConfig,
   QuestionConfig,
@@ -21,6 +22,26 @@ describe('QuestionConfigService', () => {
   describe('#getConfig', () => {
     it('should return a config', () => {
       expect(service.getConfig()).toBeDefined();
+    });
+
+    describe('when localStorage has preferences', () => {
+      beforeEach(() => {
+        TestUtil.mockLocalStorage();
+      });
+
+      it('should return a config', () => {
+        expect(service.getConfig()).toBeDefined();
+      });
+    });
+
+    describe('when localStorage has no preferences', () => {
+      beforeEach(() => {
+        TestUtil.mockLocalStorage({});
+      });
+
+      it('should return a config', () => {
+        expect(service.getConfig()).toBeDefined();
+      });
     });
   });
 

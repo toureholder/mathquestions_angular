@@ -5,8 +5,6 @@ import { QuestionConfig } from 'src/app/shared/models/question-config.interface'
   providedIn: 'root',
 })
 export class QuestionConfigService {
-  private readonly localStorageKey = 'question-config-prefrences';
-
   private config: QuestionConfig = {
     adition: { maxNumberOfNumbers: 3, maxValue: 10000 },
     subtraction: { maxNumberOfNumbers: 2, maxValue: 10000 },
@@ -66,11 +64,18 @@ export class QuestionConfigService {
   }
 
   private saveToPreferences(config: QuestionConfig): void {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(config));
+    localStorage.setItem(
+      QuestionConfigService.localStorageKey,
+      JSON.stringify(config)
+    );
   }
 
   private getFromPreferences(): QuestionConfig | undefined {
-    const preference = localStorage.getItem(this.localStorageKey);
+    const preference = localStorage.getItem(
+      QuestionConfigService.localStorageKey
+    );
     return preference ? JSON.parse(preference) : undefined;
   }
+
+  static readonly localStorageKey = 'question-config-prefrences';
 }

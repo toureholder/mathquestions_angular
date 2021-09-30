@@ -25,7 +25,7 @@ export class SubtractionComponent implements OnInit, OperationComponent {
     this.isCorrect = answer === diff;
   }
 
-  generateNewQestion(): void {
+  generateNewQestion(forcedOptions?: NewSubtractionsQuestionOptions): void {
     let randomNumbers: number[] = [];
     let diff = -1;
 
@@ -34,9 +34,9 @@ export class SubtractionComponent implements OnInit, OperationComponent {
       diff = randomNumbers.reduce((a: number, b: number) => a - b);
     }
 
-    randomNumbers.sort(this.descending);
+    const numbers = forcedOptions?.numbers || randomNumbers;
 
-    this.numbers = randomNumbers;
+    this.numbers = numbers.sort(this.descending);
     this.isCorrect = undefined;
   }
 
@@ -64,4 +64,8 @@ export class SubtractionComponent implements OnInit, OperationComponent {
   private descending(a: number, b: number): number {
     return b < a ? -1 : a < b ? 1 : 0;
   }
+}
+
+export interface NewSubtractionsQuestionOptions {
+  numbers?: number[];
 }

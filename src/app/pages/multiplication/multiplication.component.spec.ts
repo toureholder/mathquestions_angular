@@ -1,7 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { QuestionConfigService } from 'src/app/core/services/question-config/question-config.service';
-import { fakeQuestionConfig } from 'src/app/shared/models/question-config.interface';
+import {
+  fakeQuestionConfig,
+  QuestionConfig,
+} from 'src/app/shared/models/question-config.interface';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 import { MultiplicationComponent } from './multiplication.component';
@@ -76,7 +79,7 @@ describe('MultiplicationComponent', () => {
   });
 
   describe('#generateNewQestion', () => {
-    it('should genereate a question with two numbers', () => {
+    it('should genereate a question numbers in expected range', () => {
       // When
       component.generateNewQestion();
 
@@ -92,6 +95,52 @@ describe('MultiplicationComponent', () => {
 
       // Then
       expect(component.isCorrect).toBeUndefined();
+    });
+
+    describe('when maxValues is not in sync with quantity', () => {
+      beforeEach(() => {
+        const newConfig = JSON.parse(
+          JSON.stringify(fakeQuestionConfig)
+        ) as QuestionConfig;
+
+        newConfig.multiplication.maxNumberOfNumbers = 5;
+        newConfig.multiplication.maxValues = [10];
+
+        mockQuestionConfigService.getConfig.and.returnValue(newConfig);
+      });
+
+      it('should genereate a question numbers in expected range', () => {
+        // When
+        component.generateNewQestion();
+
+        // Then
+        expect(component.numbers.length).toBeLessThanOrEqual(
+          multiplicationConfig.maxNumberOfNumbers
+        );
+      });
+    });
+
+    describe('when maxValues is empty', () => {
+      beforeEach(() => {
+        const newConfig = JSON.parse(
+          JSON.stringify(fakeQuestionConfig)
+        ) as QuestionConfig;
+
+        newConfig.multiplication.maxNumberOfNumbers = 5;
+        newConfig.multiplication.maxValues = [];
+
+        mockQuestionConfigService.getConfig.and.returnValue(newConfig);
+      });
+
+      it('should genereate a question numbers in expected range', () => {
+        // When
+        component.generateNewQestion();
+
+        // Then
+        expect(component.numbers.length).toBeLessThanOrEqual(
+          multiplicationConfig.maxNumberOfNumbers
+        );
+      });
     });
   });
 });

@@ -87,7 +87,23 @@ describe('SubtractionComponent', () => {
 
     it('should correctly order numbers when the first is larger than the second', () => {
       // When
-      component.generateNewQestion();
+      component.generateNewQestion({ numbers: [100, 50] });
+
+      // Then
+      expect(component.numbers[0]).toBeGreaterThanOrEqual(component.numbers[1]);
+    });
+
+    it('should correctly order numbers when the second is larger than the first', () => {
+      // When
+      component.generateNewQestion({ numbers: [50, 100] });
+
+      // Then
+      expect(component.numbers[0]).toBeGreaterThanOrEqual(component.numbers[1]);
+    });
+
+    it(`should correctly 'order' numbers when they are equal`, () => {
+      // When
+      component.generateNewQestion({ numbers: [100, 100] });
 
       // Then
       expect(component.numbers[0]).toBeGreaterThanOrEqual(component.numbers[1]);

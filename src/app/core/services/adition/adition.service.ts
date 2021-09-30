@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Gender } from 'src/app/pages/problem/models/gender.interface';
 import { Problem } from 'src/app/pages/problem/models/problem.interface';
 import {
+  AddTwoThingsQuestionData,
+  MoreAndMoreQuestionData,
   randomAddTwoThingsQuestionData,
   randomMoreAndMoreQuestionData,
 } from 'src/app/pages/problem/models/question-subject.interface';
@@ -11,9 +13,10 @@ import { ProblemService } from '../problem-service.interface';
   providedIn: 'root',
 })
 export class AditionService implements ProblemService {
-  getProblem(): Problem {
-    const addTwoT = randomAddTwoThingsQuestionData();
-    const moreAndMore = randomMoreAndMoreQuestionData();
+  getProblem(forcedOptions?: AditionProblemOptions): Problem {
+    const addTwo = forcedOptions?.addTwo || randomAddTwoThingsQuestionData();
+    const moreAndMore =
+      forcedOptions?.moreAndMore || randomMoreAndMoreQuestionData();
 
     const parte1 = Math.floor(Math.random() * (1000 - 10 + 1)) + 0;
     const parte2 = Math.floor(Math.random() * (1000 - 10 + 1)) + 0;
@@ -21,17 +24,17 @@ export class AditionService implements ProblemService {
 
     const option1: Problem = {
       text: `
-      ${addTwoT.actorGender === Gender.male ? 'Um' : 'Uma'} ${addTwoT.actor} ${
-        addTwoT.passadoSingular
-      } ${parte1} ${addTwoT.things} ${addTwoT.place} 
-      e depois ${addTwoT.actorGender === Gender.male ? 'outro' : 'outra'} ${
-        addTwoT.actor
-      } ${addTwoT.passadoSingular} mais ${parte2} ${addTwoT.things}. ${
-        addTwoT.thingsGender === Gender.male ? 'Quantos' : 'Quantas'
+      ${addTwo.actorGender === Gender.male ? 'Um' : 'Uma'} ${addTwo.actor} ${
+        addTwo.passadoSingular
+      } ${parte1} ${addTwo.things} ${addTwo.place} 
+      e depois ${addTwo.actorGender === Gender.male ? 'outro' : 'outra'} ${
+        addTwo.actor
+      } ${addTwo.passadoSingular} mais ${parte2} ${addTwo.things}. ${
+        addTwo.thingsGender === Gender.male ? 'Quantos' : 'Quantas'
       } 
-      ${addTwoT.things} ${
-        addTwoT.actorGender === Gender.male ? 'os dois' : 'as duas'
-      } ${addTwoT.actors} ${addTwoT.passadoPlural} ${addTwoT.place}?
+      ${addTwo.things} ${
+        addTwo.actorGender === Gender.male ? 'os dois' : 'as duas'
+      } ${addTwo.actors} ${addTwo.passadoPlural} ${addTwo.place}?
       `,
       correctAnswer: parte1 + parte2,
     };
@@ -54,4 +57,9 @@ export class AditionService implements ProblemService {
 
     return options[index];
   }
+}
+
+export interface AditionProblemOptions {
+  addTwo?: AddTwoThingsQuestionData;
+  moreAndMore?: MoreAndMoreQuestionData;
 }

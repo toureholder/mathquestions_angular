@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Gender } from 'src/app/pages/problem/models/gender.interface';
 import { Problem } from 'src/app/pages/problem/models/problem.interface';
 import {
+  MoreThingsQuestionData,
+  QuestionEstablishmentSubject,
+  QuestionSubject,
   randomMoreThingsQuestionData,
   randomObject,
   randomPurchase,
@@ -13,11 +16,11 @@ import { ProblemService } from '../problem-service.interface';
   providedIn: 'root',
 })
 export class SubtractionService implements ProblemService {
-  getProblem(): Problem {
-    const subject = randomSubject();
-    const object = randomObject();
-    const purchase = randomPurchase();
-    const more = randomMoreThingsQuestionData();
+  getProblem(forcedOptions?: SubtractionProblemOptions): Problem {
+    const subject = forcedOptions?.subject || randomSubject();
+    const object = forcedOptions?.subject || randomObject();
+    const purchase = forcedOptions?.purchase || randomPurchase();
+    const more = forcedOptions?.moreThings || randomMoreThingsQuestionData();
 
     const total = Math.floor(Math.random() * (2000 - 750 + 1)) + 750;
     const parte = Math.floor(Math.random() * (749 - 50 + 1)) + 50;
@@ -93,4 +96,11 @@ export class SubtractionService implements ProblemService {
 
     return options[index];
   }
+}
+
+export interface SubtractionProblemOptions {
+  subject?: QuestionSubject;
+  object?: QuestionSubject;
+  purchase?: QuestionEstablishmentSubject;
+  moreThings?: MoreThingsQuestionData;
 }

@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Gender } from 'src/app/pages/problem/models/gender.interface';
 import { Problem } from 'src/app/pages/problem/models/problem.interface';
-import { randomMultiplicationQuestionData } from 'src/app/pages/problem/models/question-subject.interface';
+import {
+  MultiplicationQuestionData,
+  randomMultiplicationQuestionData,
+} from 'src/app/pages/problem/models/question-subject.interface';
 import { ProblemService } from '../problem-service.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MultiplicationService implements ProblemService {
-  getProblem(): Problem {
+  getProblem(forcedOptions?: MultiplicationProblemOptions): Problem {
     const firstNumber = Math.floor(Math.random() * 98) + 2;
     const secondNumber = Math.floor(Math.random() * 5) + 2;
 
-    const data = randomMultiplicationQuestionData();
+    const data = forcedOptions?.data || randomMultiplicationQuestionData();
 
     return {
       text: `
@@ -25,4 +28,8 @@ export class MultiplicationService implements ProblemService {
       correctAnswer: firstNumber * secondNumber,
     };
   }
+}
+
+export interface MultiplicationProblemOptions {
+  data?: MultiplicationQuestionData;
 }

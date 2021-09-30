@@ -1,0 +1,32 @@
+import { QuestionConfigService } from 'src/app/core/services/question-config/question-config.service';
+
+export class TestUtil {
+  static mockLocalStorage(initalStore?: { [key: string]: string }): void {
+    const defaultStore: { [key: string]: string } = {
+      [QuestionConfigService.localStorageKey]:
+        '{"adition":{"maxNumberOfNumbers":3,"maxValue":10000},"subtraction":{"maxNumberOfNumbers":2,"maxValue":10000},"multiplication":{"maxNumberOfNumbers":2,"maxValues":[99,6],"defaultMaxValue":10}}',
+    };
+
+    let store: { [key: string]: string } = initalStore || defaultStore;
+
+    spyOn(localStorage, 'getItem').and.callFake(
+      (key: string): string | null => {
+        return store[key] || null;
+      }
+    );
+
+    spyOn(localStorage, 'removeItem').and.callFake((key: string): void => {
+      delete store[key];
+    });
+
+    spyOn(localStorage, 'setItem').and.callFake(
+      (key: string, value: string): string => {
+        return (store[key] = value);
+      }
+    );
+
+    spyOn(localStorage, 'clear').and.callFake(() => {
+      store = {};
+    });
+  }
+}
