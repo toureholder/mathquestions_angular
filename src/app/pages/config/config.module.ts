@@ -1,12 +1,14 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
-import { ConfigRoutingModule } from './config-routing.module';
-import { ConfigComponent } from './config.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
+
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ConfigRoutingModule } from './config-routing.module';
+import { ConfigComponent } from './config.component';
 
 @NgModule({
   declarations: [ConfigComponent],
@@ -17,6 +19,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatFormFieldModule,
     MatInputModule,
     MatSliderModule,
+    MatExpansionModule,
   ],
 })
 export class ConfigModule {}

@@ -5,12 +5,13 @@
 
 h1,
 h2,
-h3 {
+h3,
+p {
   font-family: 'Patrick Hand', cursive;
 }
 
 h2 {
-  margin: 0 0 var(--app-default-spacing);
+  margin: 0;
 }
 
 .config-h2-vertical-divider {
@@ -20,10 +21,8 @@ h2 {
 }
 
 .confg-item-container {
-  border: 1px solid var(--app-light-gray);
-  padding: var(--app-default-spacing);
-  border-radius: var(--app-default-border-radius);
-  margin-bottom: var(--app-default-spacing);
+  border-top: 1px solid var(--app-light-gray);
+  padding: var(--app-default-spacing) 0;
 }
 
 .confg-item-q-and-a {
@@ -43,9 +42,10 @@ h2 {
     border: 1px solid var(--app-light-gray);
     border-radius: var(--app-default-border-radius);
     margin-left: var(--app-default-spacing);
+    padding: calc(var(--app-default-spacing) / 2);
 
     span {
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: bold;
     }
   }
@@ -67,10 +67,6 @@ h2 {
   width: 100%;
 }
 
-.section.disabled {
+.disabled {
   color: lightgray;
-
-  .config-h2-vertical-divider {
-    background-color: lightgray;
-  }
 }
