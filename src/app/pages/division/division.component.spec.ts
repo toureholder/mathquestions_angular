@@ -55,68 +55,12 @@ describe('DivisionComponent', () => {
   });
 
   describe('#generateNewQestion', () => {
-    it('should genereate a question numbers in expected range', () => {
-      // When
-      component.generateNewQestion();
-
-      // Then
-      expect(component.numbers.length).toBeLessThanOrEqual(
-        divisionConfig.maxNumberOfNumbers
-      );
-    });
-
     it('should reset isCorrect', () => {
       // When
       component.generateNewQestion();
 
       // Then
       expect(component.isCorrect).toBeUndefined();
-    });
-
-    describe('when maxValues is not in sync with quantity', () => {
-      beforeEach(() => {
-        const newConfig = JSON.parse(
-          JSON.stringify(fakeQuestionConfig)
-        ) as QuestionConfig;
-
-        newConfig.division.maxNumberOfNumbers = 5;
-        newConfig.division.maxValues = [10];
-
-        mockQuestionConfigService.getConfig.and.returnValue(newConfig);
-      });
-
-      it('should genereate a question numbers in expected range', () => {
-        // When
-        component.generateNewQestion();
-
-        // Then
-        expect(component.numbers.length).toBeLessThanOrEqual(
-          divisionConfig.maxNumberOfNumbers
-        );
-      });
-    });
-
-    describe('when maxValues is empty', () => {
-      beforeEach(() => {
-        const newConfig = JSON.parse(
-          JSON.stringify(fakeQuestionConfig)
-        ) as QuestionConfig;
-
-        newConfig.division.maxNumberOfNumbers = 5;
-        newConfig.division.maxValues = [];
-
-        mockQuestionConfigService.getConfig.and.returnValue(newConfig);
-      });
-
-      it('should genereate a question numbers in expected range', () => {
-        // When
-        component.generateNewQestion();
-
-        // Then
-        expect(component.numbers.length).toBeLessThanOrEqual(
-          divisionConfig.maxNumberOfNumbers
-        );
-      });
     });
   });
 

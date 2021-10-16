@@ -34,9 +34,7 @@ describe('QuestionConfigService', () => {
           defaultMaxValue: 10,
         },
         division: {
-          maxNumberOfNumbers: 2,
           maxValues: [50, 5],
-          defaultMaxValue: 10,
         },
       };
 
@@ -73,9 +71,7 @@ describe('QuestionConfigService', () => {
           ...preference,
           ...{
             division: {
-              maxNumberOfNumbers: 2,
               maxValues: [99, 6],
-              defaultMaxValue: 10,
             },
           },
         } as QuestionConfig;
@@ -161,58 +157,6 @@ describe('QuestionConfigService', () => {
       expect(service.getConfig().multiplication.maxValues.length).toEqual(
         number
       );
-    });
-
-    it('should update division maxValues when division maxNumberOfNumbers decreases', () => {
-      // Given
-      const config = fakeQuestionConfig;
-
-      service.setConfig(config);
-
-      const newConfig = JSON.parse(
-        JSON.stringify(fakeQuestionConfig)
-      ) as QuestionConfig;
-
-      const number = 1;
-
-      newConfig.division.maxNumberOfNumbers = number;
-
-      // Making sure number has decreased in this test
-      expect(newConfig.division.maxNumberOfNumbers).toBeLessThan(
-        service.getConfig().division.maxNumberOfNumbers
-      );
-
-      // When
-      service.setConfig(newConfig);
-
-      // Then
-      expect(service.getConfig().division.maxValues.length).toEqual(number);
-    });
-
-    it('should update division maxValues when division maxNumberOfNumbers increases', () => {
-      // Given
-      const config = fakeQuestionConfig;
-
-      service.setConfig(config);
-
-      const newConfig = JSON.parse(
-        JSON.stringify(fakeQuestionConfig)
-      ) as QuestionConfig;
-
-      const number = 30;
-
-      newConfig.division.maxNumberOfNumbers = number;
-
-      // Making sure number has increased in this test
-      expect(newConfig.division.maxNumberOfNumbers).toBeGreaterThan(
-        service.getConfig().division.maxNumberOfNumbers
-      );
-
-      // When
-      service.setConfig(newConfig);
-
-      // Then
-      expect(service.getConfig().division.maxValues.length).toEqual(number);
     });
   });
 });

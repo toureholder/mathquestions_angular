@@ -7,9 +7,7 @@ export interface QuestionConfig {
     defaultMaxValue: number;
   };
   division: {
-    maxNumberOfNumbers: number;
     maxValues: number[];
-    defaultMaxValue: number;
   };
 }
 
@@ -22,8 +20,6 @@ export const fakeQuestionConfig: QuestionConfig = {
     defaultMaxValue: 333,
   },
   division: {
-    maxNumberOfNumbers: 27,
     maxValues: [3540, 54322],
-    defaultMaxValue: 333,
   },
 };

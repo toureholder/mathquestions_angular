@@ -14,6 +14,7 @@ export class DivisionComponent implements OnInit, OperationComponent {
   numbers: number[] = [];
   isCorrect?: boolean | undefined;
   private minNumberOfNumbers = 2;
+  private maxNumberOfNumbers = 2;
 
   constructor(private questionConfigService: QuestionConfigService) {}
 
@@ -34,7 +35,7 @@ export class DivisionComponent implements OnInit, OperationComponent {
     const divisionConfig = this.questionConfigService.getConfig().division;
 
     const minQuantity = this.minNumberOfNumbers;
-    const maxQuantity = divisionConfig.maxNumberOfNumbers;
+    const maxQuantity = this.maxNumberOfNumbers;
     const maxValues = divisionConfig.maxValues;
 
     const quantity =
@@ -43,7 +44,7 @@ export class DivisionComponent implements OnInit, OperationComponent {
     const randomNumbers: number[] = [];
 
     for (let i = 0; i < quantity; i++) {
-      const maxConfigValue = maxValues[i] || maxValues[0] || 10;
+      const maxConfigValue = maxValues[i];
 
       const maxValue =
         i > 0 ? Math.min(randomNumbers[i - 1], maxConfigValue) : maxConfigValue;

@@ -12,9 +12,7 @@ export class TestUtil {
         defaultMaxValue: 10,
       },
       division: {
-        maxNumberOfNumbers: 2,
         maxValues: [50, 5],
-        defaultMaxValue: 10,
       },
     };
 

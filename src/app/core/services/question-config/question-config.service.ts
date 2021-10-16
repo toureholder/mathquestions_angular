@@ -14,9 +14,7 @@ export class QuestionConfigService {
       defaultMaxValue: 10,
     },
     division: {
-      maxNumberOfNumbers: 2,
       maxValues: [99, 6],
-      defaultMaxValue: 10,
     },
   };
 
@@ -61,32 +59,6 @@ export class QuestionConfigService {
       );
 
       newConfig.multiplication.maxValues = newMaxValues;
-    }
-
-    const howManyNewDivisionNumbers =
-      newConfig.division.maxNumberOfNumbers -
-      this.config.division.maxNumberOfNumbers;
-
-    if (howManyNewDivisionNumbers && howManyNewDivisionNumbers > 0) {
-      const newMaxValues: number[] = [];
-
-      for (let i = 0; i < howManyNewDivisionNumbers; i++) {
-        newMaxValues.push(this.config.division.defaultMaxValue);
-      }
-
-      newConfig.division.maxValues = [
-        ...this.config.division.maxValues,
-        ...newMaxValues,
-      ];
-    }
-
-    if (howManyNewDivisionNumbers && howManyNewDivisionNumbers < 0) {
-      const newMaxValues = this.config.division.maxValues.slice(
-        0,
-        this.config.division.maxNumberOfNumbers + howManyNewDivisionNumbers
-      );
-
-      newConfig.division.maxValues = newMaxValues;
     }
 
     return newConfig;
