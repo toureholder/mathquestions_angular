@@ -50,6 +50,7 @@ div {
 
   .inner {
     border: 0px solid orange;
+    width: 100%;
     text-align: right;
 
     button {
@@ -91,6 +92,23 @@ form button {
 }
 
 input {
-  width: 15rem;
+  box-sizing: border-box;
+  width: 100%;
   text-align: right;
+}
+
+.quotion-and-remainder-container {
+  display: flex;
+
+  .col-1 {
+    flex: 2;
+  }
+
+  .col-2 {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: calc(var(--app-default-spacing) / 2);
+    margin-left: var(--app-default-spacing);
+  }
 }

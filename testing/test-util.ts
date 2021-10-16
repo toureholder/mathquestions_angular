@@ -1,10 +1,25 @@
+import { QuestionConfig } from '@shared/models/question-config.interface';
 import { QuestionConfigService } from 'src/app/core/services/question-config/question-config.service';
 
 export class TestUtil {
   static mockLocalStorage(initalStore?: { [key: string]: string }): void {
+    const preference: QuestionConfig = {
+      adition: { maxNumberOfNumbers: 3, maxValue: 929 },
+      subtraction: { maxNumberOfNumbers: 2, maxValue: 103700 },
+      multiplication: {
+        maxNumberOfNumbers: 2,
+        maxValues: [99, 7],
+        defaultMaxValue: 10,
+      },
+      division: {
+        maxNumberOfNumbers: 2,
+        maxValues: [50, 5],
+        defaultMaxValue: 10,
+      },
+    };
+
     const defaultStore: { [key: string]: string } = {
-      [QuestionConfigService.localStorageKey]:
-        '{"adition":{"maxNumberOfNumbers":3,"maxValue":10000},"subtraction":{"maxNumberOfNumbers":2,"maxValue":10000},"multiplication":{"maxNumberOfNumbers":2,"maxValues":[99,6],"defaultMaxValue":10}}',
+      [QuestionConfigService.localStorageKey]: JSON.stringify(preference),
     };
 
     let store: { [key: string]: string } = initalStore || defaultStore;

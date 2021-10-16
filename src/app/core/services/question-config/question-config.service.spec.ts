@@ -25,12 +25,62 @@ describe('QuestionConfigService', () => {
     });
 
     describe('when localStorage has preferences', () => {
+      const preference: QuestionConfig = {
+        adition: { maxNumberOfNumbers: 3, maxValue: 929 },
+        subtraction: { maxNumberOfNumbers: 2, maxValue: 103700 },
+        multiplication: {
+          maxNumberOfNumbers: 2,
+          maxValues: [99, 7],
+          defaultMaxValue: 10,
+        },
+        division: {
+          maxNumberOfNumbers: 2,
+          maxValues: [50, 5],
+          defaultMaxValue: 10,
+        },
+      };
+
       beforeEach(() => {
-        TestUtil.mockLocalStorage();
+        TestUtil.mockLocalStorage({
+          [QuestionConfigService.localStorageKey]: JSON.stringify(preference),
+        });
       });
 
-      it('should return a config', () => {
-        expect(service.getConfig()).toBeDefined();
+      it('should return preference', () => {
+        expect(service.getConfig()).toEqual(preference);
+      });
+    });
+
+    describe('when localStorage has preferences without all QuestionConfig keys', () => {
+      let preference = {
+        adition: { maxNumberOfNumbers: 3, maxValue: 929 },
+        subtraction: { maxNumberOfNumbers: 2, maxValue: 103700 },
+        multiplication: {
+          maxNumberOfNumbers: 2,
+          maxValues: [99, 7],
+          defaultMaxValue: 10,
+        },
+      };
+
+      beforeEach(() => {
+        TestUtil.mockLocalStorage({
+          [QuestionConfigService.localStorageKey]: JSON.stringify(preference),
+        });
+      });
+
+      it('should return preference with missing keys added', () => {
+        const expectedValue = {
+          ...preference,
+          ...{
+            division: {
+              maxNumberOfNumbers: 2,
+              maxValues: [99, 6],
+              defaultMaxValue: 10,
+            },
+          },
+        } as QuestionConfig;
+
+        expect(service.getConfig()).toEqual(expectedValue);
       });
     });
 
@@ -71,6 +121,11 @@ describe('QuestionConfigService', () => {
 
       newConfig.multiplication.maxNumberOfNumbers = number;
 
+      // Making sure number has decreased in this test
+      expect(newConfig.multiplication.maxNumberOfNumbers).toBeLessThan(
+        service.getConfig().multiplication.maxNumberOfNumbers
+      );
+
       // When
       service.setConfig(newConfig);
 
@@ -90,9 +145,14 @@ describe('QuestionConfigService', () => {
         JSON.stringify(fakeQuestionConfig)
       ) as QuestionConfig;
 
-      const number = 5;
+      const number = 30;
 
       newConfig.multiplication.maxNumberOfNumbers = number;
+
+      // Making sure number has increased in this test
+      expect(newConfig.multiplication.maxNumberOfNumbers).toBeGreaterThan(
+        service.getConfig().multiplication.maxNumberOfNumbers
+      );
 
       // When
       service.setConfig(newConfig);
@@ -101,6 +161,58 @@ describe('QuestionConfigService', () => {
       expect(service.getConfig().multiplication.maxValues.length).toEqual(
         number
       );
+    });
+
+    it('should update division maxValues when division maxNumberOfNumbers decreases', () => {
+      // Given
+      const config = fakeQuestionConfig;
+
+      service.setConfig(config);
+
+      const newConfig = JSON.parse(
+        JSON.stringify(fakeQuestionConfig)
+      ) as QuestionConfig;
+
+      const number = 1;
+
+      newConfig.division.maxNumberOfNumbers = number;
+
+      // Making sure number has decreased in this test
+      expect(newConfig.division.maxNumberOfNumbers).toBeLessThan(
+        service.getConfig().division.maxNumberOfNumbers
+      );
+
+      // When
+      service.setConfig(newConfig);
+
+      // Then
+      expect(service.getConfig().division.maxValues.length).toEqual(number);
+    });
+
+    it('should update division maxValues when division maxNumberOfNumbers increases', () => {
+      // Given
+      const config = fakeQuestionConfig;
+
+      service.setConfig(config);
+
+      const newConfig = JSON.parse(
+        JSON.stringify(fakeQuestionConfig)
+      ) as QuestionConfig;
+
+      const number = 30;
+
+      newConfig.division.maxNumberOfNumbers = number;
+
+      // Making sure number has increased in this test
+      expect(newConfig.division.maxNumberOfNumbers).toBeGreaterThan(
+        service.getConfig().division.maxNumberOfNumbers
+      );
+
+      // When
+      service.setConfig(newConfig);
+
+      // Then
+      expect(service.getConfig().division.maxValues.length).toEqual(number);
     });
   });
 });

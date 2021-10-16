@@ -56,7 +56,7 @@ describe('SubtractionComponent', () => {
       component.numbers = [100, 99];
 
       // When
-      component.checkAnswer(1);
+      component.checkAnswer({ quotient: 1 });
 
       // Then
       expect(component.isCorrect).toBeTrue();
@@ -67,7 +67,7 @@ describe('SubtractionComponent', () => {
       component.numbers = [100, 99];
 
       // When
-      component.checkAnswer(234);
+      component.checkAnswer({ quotient: 34 });
 
       // Then
       expect(component.isCorrect).toBeFalse();

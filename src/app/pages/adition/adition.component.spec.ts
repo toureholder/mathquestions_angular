@@ -78,7 +78,7 @@ describe('AditionComponent', () => {
       component.numbers = [100, 50];
 
       // When
-      component.checkAnswer(150);
+      component.checkAnswer({ quotient: 150 });
 
       // Then
       expect(component.isCorrect).toBeTrue();
@@ -89,7 +89,7 @@ describe('AditionComponent', () => {
       component.numbers = [100, 50];
 
       // When
-      component.checkAnswer(232);
+      component.checkAnswer({ quotient: 232 });
 
       // Then
       expect(component.isCorrect).toBeFalse();

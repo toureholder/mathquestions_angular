@@ -13,6 +13,11 @@ export class QuestionConfigService {
       maxValues: [99, 6],
       defaultMaxValue: 10,
     },
+    division: {
+      maxNumberOfNumbers: 2,
+      maxValues: [99, 6],
+      defaultMaxValue: 10,
+    },
   };
 
   getConfig(): QuestionConfig {
@@ -20,13 +25,11 @@ export class QuestionConfigService {
   }
 
   setConfig(newConfig: QuestionConfig): void {
-    this.config = this.addMultiplicationMaxValues(newConfig);
+    this.config = this.addNewMaxValues(newConfig);
     this.saveToPreferences(this.config);
   }
 
-  private addMultiplicationMaxValues(
-    newConfig: QuestionConfig
-  ): QuestionConfig {
+  private addNewMaxValues(newConfig: QuestionConfig): QuestionConfig {
     const howManyNewMultiplicationNumbers =
       newConfig.multiplication.maxNumberOfNumbers -
       this.config.multiplication.maxNumberOfNumbers;
@@ -60,6 +63,32 @@ export class QuestionConfigService {
       newConfig.multiplication.maxValues = newMaxValues;
     }
 
+    const howManyNewDivisionNumbers =
+      newConfig.division.maxNumberOfNumbers -
+      this.config.division.maxNumberOfNumbers;
+
+    if (howManyNewDivisionNumbers && howManyNewDivisionNumbers > 0) {
+      const newMaxValues: number[] = [];
+
+      for (let i = 0; i < howManyNewDivisionNumbers; i++) {
+        newMaxValues.push(this.config.division.defaultMaxValue);
+      }
+
+      newConfig.division.maxValues = [
+        ...this.config.division.maxValues,
+        ...newMaxValues,
+      ];
+    }
+
+    if (howManyNewDivisionNumbers && howManyNewDivisionNumbers < 0) {
+      const newMaxValues = this.config.division.maxValues.slice(
+        0,
+        this.config.division.maxNumberOfNumbers + howManyNewDivisionNumbers
+      );
+
+      newConfig.division.maxValues = newMaxValues;
+    }
+
     return newConfig;
   }
 
@@ -74,7 +103,10 @@ export class QuestionConfigService {
     const preference = localStorage.getItem(
       QuestionConfigService.localStorageKey
     );
-    return preference ? JSON.parse(preference) : undefined;
+
+    return preference
+      ? { ...this.config, ...JSON.parse(preference) }
+      : undefined;
   }
 
   static readonly localStorageKey = 'question-config-prefrences';

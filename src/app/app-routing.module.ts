@@ -42,6 +42,11 @@ const routes: Routes = [
       import('./pages/config/config.module').then((m) => m.ConfigModule),
   },
   {
+    path: 'divide',
+    loadChildren: () =>
+      import('./pages/division/division.module').then((m) => m.DivisionModule),
+  },
+  {
     path: '**',
     redirectTo: 'home',
   },

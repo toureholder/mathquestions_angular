@@ -39,7 +39,7 @@ export class SubtractionService implements ProblemService {
         object.name
       }?
       `,
-      correctAnswer: total - parte,
+      correctAnswer: { quotient: total - parte },
     };
 
     const option2: Problem = {
@@ -54,7 +54,7 @@ export class SubtractionService implements ProblemService {
         purchase.products
       } faltam chegar?
       `,
-      correctAnswer: total - parte,
+      correctAnswer: { quotient: total - parte },
     };
 
     const option3: Problem = {
@@ -75,7 +75,7 @@ export class SubtractionService implements ProblemService {
         purchase.itemGender === Gender.male ? 'o' : 'a'
       } ${purchase.item}?
       `,
-      correctAnswer: cheaperTotal - cheaperParte,
+      correctAnswer: { quotient: cheaperTotal - cheaperParte },
     };
 
     const option4: Problem = {
@@ -88,7 +88,7 @@ export class SubtractionService implements ProblemService {
         more.thingsGender === Gender.male ? 'Quantos' : 'Quantas'
       } ${more.things} foram ${more.done}?
       `,
-      correctAnswer: total - parte,
+      correctAnswer: { quotient: total - parte },
     };
 
     const options: Problem[] = [option1, option2, option3, option4];

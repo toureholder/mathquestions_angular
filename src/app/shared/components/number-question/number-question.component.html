@@ -18,51 +18,92 @@
 
     <div class="question-container">
       <div class="inner">
-        <div class="box">
-          <div class="sign-container">
-            <div
-              class="row"
-              data-test="operation-column-space"
-              *ngFor="let line of linesAboveSign"
-            ></div>
+        <div class="quotion-and-remainder-container">
+          <div class="box col-1">
+            <div class="sign-container">
+              <div
+                class="row"
+                data-test="operation-column-space"
+                *ngFor="let line of linesAboveSign"
+              ></div>
 
-            <div class="row" data-test="operation-sign">
-              {{ sign }}
+              <div class="row" data-test="operation-sign">
+                {{ sign }}
+              </div>
+            </div>
+
+            <div class="numbers-container">
+              <div
+                class="row"
+                data-test="number-cell"
+                *ngFor="let number of numbers"
+              >
+                {{ number }}
+              </div>
             </div>
           </div>
 
-          <div class="numbers-container">
-            <div
-              class="row"
-              data-test="number-cell"
-              *ngFor="let number of numbers"
-            >
-              {{ number }}
-            </div>
+          <div
+            class="col-2"
+            data-test="remainder-col"
+            *ngIf="showRemainderColumn"
+          >
+            e resto
           </div>
         </div>
 
         <div class="form-container">
-          <form (ngSubmit)="onSubmit(userAnswer)">
-            <input
-              [(ngModel)]="userAnswer"
-              type="number"
-              name="answer"
-              data-test="user-answer"
-              [ngClass]="
-                isCorrect === undefined
-                  ? 'answer'
-                  : isCorrect
-                  ? 'correct answer'
-                  : 'wrong answer'
-              "
-            />
+          <form
+            (ngSubmit)="
+              onSubmit({
+                quotient: userInput.quotient,
+                remainder: userInput.remainder
+              })
+            "
+          >
+            <div class="quotion-and-remainder-container">
+              <div class="col-1">
+                <input
+                  [(ngModel)]="userInput.quotient"
+                  type="number"
+                  name="answer"
+                  data-test="user-answer"
+                  [ngClass]="
+                    isCorrect === undefined
+                      ? 'answer'
+                      : isCorrect
+                      ? 'correct answer'
+                      : 'wrong answer'
+                  "
+                />
+              </div>
+
+              <div
+                class="col-2"
+                data-test="remainder-col"
+                *ngIf="showRemainderColumn"
+              >
+                <input
+                  [(ngModel)]="userInput.remainder"
+                  type="number"
+                  name="answer"
+                  data-test="user-answer"
+                  [ngClass]="
+                    isCorrect === undefined
+                      ? 'answer'
+                      : isCorrect
+                      ? 'correct answer'
+                      : 'wrong answer'
+                  "
+                />
+              </div>
+            </div>
 
             <button
               mat-flat-button
               color="primary"
               type="submit"
-              [disabled]="!userAnswer"
+              [disabled]="!userInput.quotient"
             >
               Verificar
             </button>

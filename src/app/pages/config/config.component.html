@@ -201,6 +201,71 @@
   <div class="app-vertical-spacer"></div>
   <div class="app-vertical-spacer"></div>
 
+  <div id="division-section">
+    <h2>Divisão</h2>
+
+    <div class="config-h2-vertical-divider"></div>
+
+    <div class="app-vertical-spacer"></div>
+
+    <div class="confg-item-container">
+      <div class="confg-item-q-and-a">
+        <h3 class="question">
+          Até quantos números podem fazer parte de uma conta de divisão?
+        </h3>
+        <div class="value">
+          <span>{{ config.division.maxNumberOfNumbers }}</span>
+        </div>
+      </div>
+
+      <div class="app-vertical-spacer"></div>
+
+      <mat-slider
+        max="10"
+        min="2"
+        step="1"
+        tickInterval="1"
+        [thumbLabel]="true"
+        [(ngModel)]="config.division.maxNumberOfNumbers"
+        (ngModelChange)="onChanges()"
+      ></mat-slider>
+
+      <p>Por exemplo, 6 x 4 x 7 é uma conta com 3 números.</p>
+    </div>
+
+    <div class="app-vertical-spacer"></div>
+
+    <div
+      class="confg-item-container"
+      *ngFor="let value of config.division.maxValues; index as i"
+    >
+      <div class="confg-item-q-and-a">
+        <h3 class="question">
+          Qual é o valor máximo do {{ i + 1 }}º número da conta de divisão?
+        </h3>
+        <div class="value">
+          <span>{{ config.division.maxValues[i] }}</span>
+        </div>
+      </div>
+
+      <div class="app-vertical-spacer"></div>
+
+      <mat-slider
+        max="100"
+        min="1"
+        step="1"
+        tickInterval="1"
+        [thumbLabel]="true"
+        [(ngModel)]="config.division.maxValues[i]"
+        (ngModelChange)="onChanges()"
+      ></mat-slider>
+    </div>
+  </div>
+
+  <div class="app-vertical-spacer"></div>
+  <div class="app-vertical-spacer"></div>
+  <div class="app-vertical-spacer"></div>
+
   <div id="problems-section" class="section disabled">
     <h2>Probleminhas</h2>
 

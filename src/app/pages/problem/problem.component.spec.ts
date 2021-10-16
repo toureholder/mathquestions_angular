@@ -75,17 +75,17 @@ describe('ProblemComponent', () => {
       // Given
       const subtractionProblem: Problem = {
         text: 'Lorem ipsum dolor',
-        correctAnswer: 10,
+        correctAnswer: { quotient: 10 },
       };
 
       const aditionProblem: Problem = {
         text: 'Lorem ipsum dolor',
-        correctAnswer: 20,
+        correctAnswer: { quotient: 20 },
       };
 
       const multiplicationProblem: Problem = {
         text: 'Lorem ipsum dolor',
-        correctAnswer: 30,
+        correctAnswer: { quotient: 30 },
       };
 
       mockSubtractionService.getProblem.and.returnValue(subtractionProblem);
@@ -105,15 +105,29 @@ describe('ProblemComponent', () => {
   });
 
   describe('#checkAnswer', () => {
-    it('should set isCorrect to true if answer correct', () => {
+    it('should set isCorrect to true if answer only has quotient and is correct', () => {
       // Given
       component.problem = {
         text: 'Lorem ipsum dolor',
-        correctAnswer: 80,
+        correctAnswer: { quotient: 80 },
       };
 
       // When
-      component.checkAnswer(80);
+      component.checkAnswer({ quotient: 80 });
+
+      // Then
+      expect(component.isCorrect).toBeTrue();
+    });
+
+    it('should set isCorrect to true if answer has quotient and remainder and is correct', () => {
+      // Given
+      component.problem = {
+        text: 'Lorem ipsum dolor',
+        correctAnswer: { quotient: 80, remainder: 3 },
+      };
+
+      // When
+      component.checkAnswer({ quotient: 80, remainder: 3 });
 
       // Then
       expect(component.isCorrect).toBeTrue();
@@ -123,22 +137,22 @@ describe('ProblemComponent', () => {
       // Given
       component.problem = {
         text: 'Lorem ipsum dolor',
-        correctAnswer: 80,
+        correctAnswer: { quotient: 80 },
       };
 
       // When
-      component.checkAnswer(45);
+      component.checkAnswer({ quotient: 45 });
 
       // Then
       expect(component.isCorrect).toBeFalse();
     });
 
-    it('should set isCorrect to false if problem is undefined', () => {
+    it('should not update isCorrect if problem is undefined', () => {
       // When
-      component.checkAnswer(45);
+      component.checkAnswer({ quotient: 45 });
 
       // Then
-      expect(component.isCorrect).toBeFalse();
+      expect(component.isCorrect).toBeUndefined();
     });
   });
 });

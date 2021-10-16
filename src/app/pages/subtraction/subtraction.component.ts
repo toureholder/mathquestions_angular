@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Answer } from '@shared/models/answer.interface';
 import { QuestionConfigService } from 'src/app/core/services/question-config/question-config.service';
 import { OperationComponent } from 'src/app/shared/models/operation-component.interface';
 import { MathOperation } from 'src/app/shared/models/operation.enum';
@@ -20,9 +21,9 @@ export class SubtractionComponent implements OnInit, OperationComponent {
     this.generateNewQestion();
   }
 
-  checkAnswer(answer: number): void {
+  checkAnswer(answer: Answer): void {
     const diff = this.numbers.reduce((a: number, b: number) => a - b);
-    this.isCorrect = answer === diff;
+    this.isCorrect = answer.quotient === diff;
   }
 
   generateNewQestion(forcedOptions?: NewSubtractionsQuestionOptions): void {

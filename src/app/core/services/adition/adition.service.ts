@@ -36,7 +36,7 @@ export class AditionService implements ProblemService {
         addTwo.actorGender === Gender.male ? 'os dois' : 'as duas'
       } ${addTwo.actors} ${addTwo.passadoPlural} ${addTwo.place}?
       `,
-      correctAnswer: parte1 + parte2,
+      correctAnswer: { quotient: parte1 + parte2 },
     };
 
     const option2: Problem = {
@@ -49,7 +49,7 @@ export class AditionService implements ProblemService {
         moreAndMore.actors
       } há no total?
       `,
-      correctAnswer: parte1 + parte2 + parte3,
+      correctAnswer: { quotient: parte1 + parte2 + parte3 },
     };
 
     const options: Problem[] = [option1, option2];

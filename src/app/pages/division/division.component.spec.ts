@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { QuestionConfigService } from 'src/app/core/services/question-config/question-config.service';
 import {
   fakeQuestionConfig,
   QuestionConfig,
-} from 'src/app/shared/models/question-config.interface';
-import { SharedModule } from 'src/app/shared/shared.module';
+} from '@shared/models/question-config.interface';
+import { SharedModule } from '@shared/shared.module';
+import { QuestionConfigService } from 'src/app/core/services/question-config/question-config.service';
 
-import { MultiplicationComponent } from './multiplication.component';
+import { DivisionComponent } from './division.component';
 
-describe('MultiplicationComponent', () => {
-  let component: MultiplicationComponent;
-  let fixture: ComponentFixture<MultiplicationComponent>;
+describe('DivisionComponent', () => {
+  let component: DivisionComponent;
+  let fixture: ComponentFixture<DivisionComponent>;
   let mockQuestionConfigService: jasmine.SpyObj<QuestionConfigService>;
-  const multiplicationConfig = fakeQuestionConfig.multiplication;
+  const divisionConfig = fakeQuestionConfig.division;
 
   beforeEach(async () => {
     mockQuestionConfigService = jasmine.createSpyObj(
@@ -22,7 +22,7 @@ describe('MultiplicationComponent', () => {
     );
 
     await TestBed.configureTestingModule({
-      declarations: [MultiplicationComponent],
+      declarations: [DivisionComponent],
       imports: [SharedModule, RouterTestingModule],
       providers: [
         { provide: QuestionConfigService, useValue: mockQuestionConfigService },
@@ -33,7 +33,7 @@ describe('MultiplicationComponent', () => {
   beforeEach(() => {
     mockQuestionConfigService.getConfig.and.returnValue(fakeQuestionConfig);
 
-    fixture = TestBed.createComponent(MultiplicationComponent);
+    fixture = TestBed.createComponent(DivisionComponent);
     component = fixture.componentInstance;
   });
 
@@ -41,7 +41,7 @@ describe('MultiplicationComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('#ngOnit', () => {
+  describe('#ngOnIt', () => {
     it('should call generateNewQestion', () => {
       // Given
       spyOn(component, 'generateNewQestion');
@@ -54,30 +54,6 @@ describe('MultiplicationComponent', () => {
     });
   });
 
-  describe('#checkAnswer', () => {
-    it('should set isCorrect to true when answer is correct', () => {
-      // Given
-      component.numbers = [10, 3];
-
-      // When
-      component.checkAnswer({ quotient: 30 });
-
-      // Then
-      expect(component.isCorrect).toBeTrue();
-    });
-
-    it('should set isCorrect to false when answer is wrong', () => {
-      // Given
-      component.numbers = [10, 3];
-
-      // When
-      component.checkAnswer({ quotient: 234 });
-
-      // Then
-      expect(component.isCorrect).toBeFalse();
-    });
-  });
-
   describe('#generateNewQestion', () => {
     it('should genereate a question numbers in expected range', () => {
       // When
@@ -85,7 +61,7 @@ describe('MultiplicationComponent', () => {
 
       // Then
       expect(component.numbers.length).toBeLessThanOrEqual(
-        multiplicationConfig.maxNumberOfNumbers
+        divisionConfig.maxNumberOfNumbers
       );
     });
 
@@ -103,8 +79,8 @@ describe('MultiplicationComponent', () => {
           JSON.stringify(fakeQuestionConfig)
         ) as QuestionConfig;
 
-        newConfig.multiplication.maxNumberOfNumbers = 5;
-        newConfig.multiplication.maxValues = [10];
+        newConfig.division.maxNumberOfNumbers = 5;
+        newConfig.division.maxValues = [10];
 
         mockQuestionConfigService.getConfig.and.returnValue(newConfig);
       });
@@ -115,7 +91,7 @@ describe('MultiplicationComponent', () => {
 
         // Then
         expect(component.numbers.length).toBeLessThanOrEqual(
-          multiplicationConfig.maxNumberOfNumbers
+          divisionConfig.maxNumberOfNumbers
         );
       });
     });
@@ -126,8 +102,8 @@ describe('MultiplicationComponent', () => {
           JSON.stringify(fakeQuestionConfig)
         ) as QuestionConfig;
 
-        newConfig.multiplication.maxNumberOfNumbers = 5;
-        newConfig.multiplication.maxValues = [];
+        newConfig.division.maxNumberOfNumbers = 5;
+        newConfig.division.maxValues = [];
 
         mockQuestionConfigService.getConfig.and.returnValue(newConfig);
       });
@@ -138,9 +114,66 @@ describe('MultiplicationComponent', () => {
 
         // Then
         expect(component.numbers.length).toBeLessThanOrEqual(
-          multiplicationConfig.maxNumberOfNumbers
+          divisionConfig.maxNumberOfNumbers
         );
       });
+    });
+  });
+
+  describe('#checkAnswer', () => {
+    it('should set isCorrect to true when quotient and remiander are defined and answser is correct', () => {
+      // Given
+      component.numbers = [30, 2];
+
+      // When
+      expect(component.checkAnswer({ quotient: 15, remainder: 0 }));
+
+      // Then
+      expect(component.isCorrect).toBeTrue();
+    });
+
+    it('should set isCorrect to true when quotient and remiander are not zero and answser is correct', () => {
+      // Given
+      component.numbers = [31, 2];
+
+      // When
+      expect(component.checkAnswer({ quotient: 15, remainder: 1 }));
+
+      // Then
+      expect(component.isCorrect).toBeTrue();
+    });
+
+    it('should set isCorrect to true when only quotient is defined and answser is correct', () => {
+      // Given
+      component.numbers = [30, 2];
+
+      // When
+      expect(component.checkAnswer({ quotient: 15 }));
+
+      // Then
+      expect(component.isCorrect).toBeTrue();
+    });
+
+    it('should set isCorrect to false when answser is not correct', () => {
+      // Given
+      component.numbers = [60, 2];
+
+      // When
+      expect(component.checkAnswer({ quotient: 15 }));
+
+      // Then
+      expect(component.isCorrect).toBeFalse();
+    });
+
+    it('should set isCorrect to false when quotient is correct but remainder is wrong', () => {
+      // Given
+      component.numbers = [30, 2];
+
+      // When
+      expect(component.checkAnswer({ quotient: 15, remainder: 1 }));
+
+      // Then
+      expect(component.isCorrect).toBeFalse();
     });
   });
 });

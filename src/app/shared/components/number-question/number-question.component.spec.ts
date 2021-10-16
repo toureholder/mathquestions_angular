@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Answer } from '@shared/models/answer.interface';
 import { MathOperation } from '../../models/operation.enum';
 
 import { NumberQuestionComponent } from './number-question.component';
@@ -111,25 +112,33 @@ describe('NumberQuestionComponent', () => {
   });
 
   describe('#onSubmit', () => {
-    it(`should emit an event with input`, () => {
+    it(`should emit an event with Answer object`, () => {
       // Given
-      const input = 1234;
+
+      const answer: Answer = {
+        quotient: 12,
+        remainder: 34,
+      };
+
       spyOn(component.submitEvent, 'emit');
 
       // When
-      component.onSubmit(input);
+      component.onSubmit(answer);
 
       // Then
-      expect(component.submitEvent.emit).toHaveBeenCalledWith(input);
+      expect(component.submitEvent.emit).toHaveBeenCalledWith(answer);
     });
 
-    it(`should not emit an event when input is undefined`, () => {
+    it(`should not emit an event when answer quotient is undefined`, () => {
       // Given
-      const input = undefined;
+      const answer = {
+        quotient: undefined,
+      };
+
       spyOn(component.submitEvent, 'emit');
 
       // When
-      component.onSubmit(input);
+      component.onSubmit(answer);
 
       // Then
       expect(component.submitEvent.emit).not.toHaveBeenCalled();
@@ -137,7 +146,7 @@ describe('NumberQuestionComponent', () => {
   });
 
   describe('#onGenerateNewQuestion', () => {
-    it(`should emit an event with input`, () => {
+    it(`should emit an generateNewQuestionEvent event`, () => {
       // Given
       spyOn(component.generateNewQuestionEvent, 'emit');
 
@@ -150,14 +159,14 @@ describe('NumberQuestionComponent', () => {
 
     it(`should reset answer and isCorrect`, () => {
       // Given
-      component.userAnswer = 123;
+      component.userInput = { quotient: 23 };
       component.isCorrect = true;
 
       // When
       component.onGenerateNewQuestion();
 
       // Then
-      expect(component.userAnswer).toBeUndefined();
+      expect(component.userInput).toEqual({});
       expect(component.isCorrect).toBeUndefined();
     });
   });
@@ -180,9 +189,9 @@ describe('NumberQuestionComponent', () => {
         expect(submitButton).toBeTruthy();
       });
 
-      it('should be be disabled when user answer is undefined', () => {
+      it('should be be disabled when user answer quotient is undefined', () => {
         // Given
-        component.userAnswer = undefined;
+        component.userInput = {};
 
         // When
         fixture.detectChanges();
@@ -193,7 +202,7 @@ describe('NumberQuestionComponent', () => {
 
       it('should be be enabled when user answer is defined', () => {
         // Given
-        component.userAnswer = 1234;
+        component.userInput = { quotient: 23 };
 
         // When
         fixture.detectChanges();
@@ -204,7 +213,7 @@ describe('NumberQuestionComponent', () => {
 
       it('should call onSubmit when clicked', () => {
         // Given
-        component.userAnswer = 1234;
+        component.userInput = { quotient: 23 };
         spyOn(component, 'onSubmit');
 
         // When
@@ -212,7 +221,9 @@ describe('NumberQuestionComponent', () => {
         submitButton?.click();
 
         // Then
-        expect(component.onSubmit).toHaveBeenCalledWith(component.userAnswer);
+        expect(component.onSubmit).toHaveBeenCalledWith(
+          jasmine.objectContaining<Answer>({})
+        );
       });
     });
 
@@ -231,6 +242,34 @@ describe('NumberQuestionComponent', () => {
 
         // Then
         expect(component.onGenerateNewQuestion).toHaveBeenCalled();
+      });
+    });
+
+    describe('remainder column', () => {
+      it('should display remainder column when operation is division', () => {
+        // Given
+        component.operation = MathOperation.Division;
+
+        // When
+        fixture.detectChanges();
+
+        // Then expect
+        expect(
+          template.querySelectorAll('[data-test="remainder-col"]').length
+        ).toBe(2);
+      });
+
+      it('should NOT display remainder column when operation is NOT division', () => {
+        // Given
+        component.operation = MathOperation.Adition;
+
+        // When
+        fixture.detectChanges();
+
+        // Then expect
+        expect(
+          template.querySelectorAll('[data-test="remainder-col"]').length
+        ).toBe(0);
       });
     });
   });

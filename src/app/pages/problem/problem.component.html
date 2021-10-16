@@ -7,9 +7,9 @@
 
     <div class="app-vertical-spacer"></div>
 
-    <form (ngSubmit)="checkAnswer(userAnswer)">
+    <form (ngSubmit)="checkAnswer({ quotient: userInput.quotient })">
       <input
-        [(ngModel)]="userAnswer"
+        [(ngModel)]="userInput.quotient"
         type="number"
         name="answer"
         data-test="user-answer"
@@ -38,7 +38,7 @@
         mat-flat-button
         color="primary"
         type="submit"
-        [disabled]="!userAnswer"
+        [disabled]="!userInput.quotient"
       >
         Verificar
       </button>

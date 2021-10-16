@@ -25,7 +25,7 @@ export class MultiplicationService implements ProblemService {
       } ${data.thing} 
       ${data.futurePlural} no total?
       `,
-      correctAnswer: firstNumber * secondNumber,
+      correctAnswer: { quotient: firstNumber * secondNumber },
     };
   }
 }

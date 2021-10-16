@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Answer } from '@shared/models/answer.interface';
 import { AditionService } from 'src/app/core/services/adition/adition.service';
 import { MultiplicationService } from 'src/app/core/services/multiplication/multiplication.service';
 import { SubtractionService } from 'src/app/core/services/subtraction/subtraction.service';
@@ -16,7 +17,7 @@ export class ProblemComponent implements OnInit, OperationComponent {
   operation = MathOperation.Subtraction;
   numbers: number[] = [];
   isCorrect?: boolean | undefined;
-  userAnswer?: number;
+  userInput: { quotient?: number; remainder?: number } = {};
 
   constructor(
     private subractionService: SubtractionService,
@@ -28,8 +29,16 @@ export class ProblemComponent implements OnInit, OperationComponent {
     this.generateNewQestion();
   }
 
-  checkAnswer(answer?: number): void {
-    this.isCorrect = answer === this.problem?.correctAnswer;
+  checkAnswer(answer: { quotient?: number; remainder?: number }): void {
+    if (!this.problem) {
+      return;
+    }
+
+    const correctAnswer = this.problem.correctAnswer;
+
+    this.isCorrect =
+      answer.quotient === correctAnswer.quotient &&
+      answer.remainder === correctAnswer.remainder;
   }
 
   generateNewQestion(): void {
@@ -44,6 +53,6 @@ export class ProblemComponent implements OnInit, OperationComponent {
     this.problem = pool[index];
 
     this.isCorrect = undefined;
-    this.userAnswer = undefined;
+    this.userInput = {};
   }
 }

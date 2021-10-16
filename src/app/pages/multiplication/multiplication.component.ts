@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Answer } from '@shared/models/answer.interface';
 import { QuestionConfigService } from 'src/app/core/services/question-config/question-config.service';
 import { OperationComponent } from 'src/app/shared/models/operation-component.interface';
 import { MathOperation } from 'src/app/shared/models/operation.enum';
@@ -20,9 +21,9 @@ export class MultiplicationComponent implements OnInit, OperationComponent {
     this.generateNewQestion();
   }
 
-  checkAnswer(answer: number): void {
+  checkAnswer(answer: Answer): void {
     const product = this.numbers.reduce((a: number, b: number) => a * b);
-    this.isCorrect = answer === product;
+    this.isCorrect = answer.quotient === product;
   }
 
   generateNewQestion(): void {

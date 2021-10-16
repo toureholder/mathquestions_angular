@@ -7,6 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { Answer } from '@shared/models/answer.interface';
 import { MathOperation } from '../../models/operation.enum';
 
 @Component({
@@ -18,12 +19,13 @@ export class NumberQuestionComponent implements OnInit, OnChanges {
   @Input() operation: MathOperation = MathOperation.Adition;
   @Input() numbers: number[] = [];
   @Input() isCorrect?: boolean;
-  @Output() submitEvent = new EventEmitter<number>();
+  @Output() submitEvent = new EventEmitter<Answer>();
   @Output() generateNewQuestionEvent = new EventEmitter<void>();
 
   sign?: string;
   linesAboveSign: any[] = [];
-  userAnswer?: number;
+  showRemainderColumn = false;
+  userInput: { quotient?: number; remainder?: number } = {};
 
   ngOnInit(): void {
     this.setSign();
@@ -33,16 +35,19 @@ export class NumberQuestionComponent implements OnInit, OnChanges {
     this.setRows();
   }
 
-  onSubmit(input?: number) {
-    if (!input) {
+  onSubmit(answer: { quotient?: number; remainder?: number }) {
+    if (!answer.quotient) {
       return;
     }
 
-    this.submitEvent.emit(input);
+    this.submitEvent.emit({
+      quotient: answer.quotient,
+      remainder: answer.remainder,
+    });
   }
 
   onGenerateNewQuestion() {
-    this.userAnswer = undefined;
+    this.userInput = {};
     this.isCorrect = undefined;
     this.generateNewQuestionEvent.emit();
   }
@@ -52,9 +57,11 @@ export class NumberQuestionComponent implements OnInit, OnChanges {
       Adition: '+',
       Subtraction: '-',
       Multiplication: 'x',
+      Division: '÷',
     };
 
     this.sign = signMap[this.operation];
+    this.showRemainderColumn = this.operation === MathOperation.Division;
   }
 
   private setRows(): void {
