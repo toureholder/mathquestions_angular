@@ -3,6 +3,7 @@ import { Answer } from '@shared/models/answer.interface';
 import { AditionService } from 'src/app/core/services/adition/adition.service';
 import { DivisionService } from 'src/app/core/services/division/division.service';
 import { MultiplicationService } from 'src/app/core/services/multiplication/multiplication.service';
+import { QuestionConfigService } from 'src/app/core/services/question-config/question-config.service';
 import { SubtractionService } from 'src/app/core/services/subtraction/subtraction.service';
 import { OperationComponent } from 'src/app/shared/models/operation-component.interface';
 import { MathOperation } from 'src/app/shared/models/operation.enum';
@@ -24,7 +25,8 @@ export class ProblemComponent implements OnInit, OperationComponent {
     private subractionService: SubtractionService,
     private aditionService: AditionService,
     private multiplicationService: MultiplicationService,
-    private divisionService: DivisionService
+    private divisionService: DivisionService,
+    private questionConfigService: QuestionConfigService
   ) {}
 
   ngOnInit(): void {
@@ -44,12 +46,27 @@ export class ProblemComponent implements OnInit, OperationComponent {
   }
 
   generateNewQestion(): void {
-    const pool = [
-      this.subractionService.getProblem(),
-      this.aditionService.getProblem(),
-      this.multiplicationService.getProblem(),
-      this.divisionService.getProblem(),
-    ];
+    const config = this.questionConfigService.getConfig();
+
+    const pool: Problem[] = [];
+
+    const operationsConfig = config.problems.operations;
+
+    if (operationsConfig.Adition) {
+      pool.push(this.aditionService.getProblem());
+    }
+
+    if (operationsConfig.Subtraction) {
+      pool.push(this.subractionService.getProblem());
+    }
+
+    if (operationsConfig.Multiplication) {
+      pool.push(this.multiplicationService.getProblem());
+    }
+
+    if (operationsConfig.Division) {
+      pool.push(this.divisionService.getProblem());
+    }
 
     const index = Math.floor(Math.random() * pool.length);
 

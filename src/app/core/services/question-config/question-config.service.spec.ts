@@ -36,6 +36,14 @@ describe('QuestionConfigService', () => {
         division: {
           maxValues: [50, 5],
         },
+        problems: {
+          operations: {
+            Adition: true,
+            Subtraction: true,
+            Multiplication: true,
+            Division: true,
+          },
+        },
       };
 
       beforeEach(() => {
@@ -72,6 +80,14 @@ describe('QuestionConfigService', () => {
           ...{
             division: {
               maxValues: [99, 6],
+            },
+            problems: {
+              operations: {
+                Adition: true,
+                Subtraction: true,
+                Multiplication: true,
+                Division: true,
+              },
             },
           },
         } as QuestionConfig;

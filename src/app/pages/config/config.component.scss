@@ -51,6 +51,21 @@ h2 {
   }
 }
 
+.problem-config-item-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--app-default-spacing);
+  min-height: 4rem;
+
+  p {
+    flex: 1;
+    margin-right: var(--app-default-spacing);
+    margin-bottom: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+}
+
 .mat-form-field {
   flex: 1;
   width: 6rem;

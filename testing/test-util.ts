@@ -14,6 +14,14 @@ export class TestUtil {
       division: {
         maxValues: [50, 5],
       },
+      problems: {
+        operations: {
+          Adition: true,
+          Subtraction: true,
+          Multiplication: true,
+          Division: true,
+        },
+      },
     };
 
     const defaultStore: { [key: string]: string } = {

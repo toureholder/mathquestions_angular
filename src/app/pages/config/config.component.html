@@ -217,11 +217,43 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <h2 class="disabled">Probleminhas</h2>
+          <h2>Probleminhas</h2>
         </mat-panel-title>
       </mat-expansion-panel-header>
 
-      <p class="disabled">O probleminhas não são configuráveis (ainda).</p>
+      <div class="confg-item-container">
+        <div class="problem-config-item-container">
+          <p>Incluir problemas de adição?</p>
+          <mat-slide-toggle
+            [(ngModel)]="operationsConfig.Adition"
+            (ngModelChange)="onChanges()"
+          ></mat-slide-toggle>
+        </div>
+
+        <div class="problem-config-item-container">
+          <p>Incluir problemas de subtração</p>
+          <mat-slide-toggle
+            [(ngModel)]="operationsConfig.Subtraction"
+            (ngModelChange)="onChanges()"
+          ></mat-slide-toggle>
+        </div>
+
+        <div class="problem-config-item-container">
+          <p>Incluir problemas de multiplicação?</p>
+          <mat-slide-toggle
+            [(ngModel)]="operationsConfig.Multiplication"
+            (ngModelChange)="onChanges()"
+          ></mat-slide-toggle>
+        </div>
+
+        <div class="problem-config-item-container">
+          <p>Incluir problemas de divisão?</p>
+          <mat-slide-toggle
+            [(ngModel)]="operationsConfig.Division"
+            (ngModelChange)="onChanges()"
+          ></mat-slide-toggle>
+        </div>
+      </div>
     </mat-expansion-panel>
   </mat-accordion>
 

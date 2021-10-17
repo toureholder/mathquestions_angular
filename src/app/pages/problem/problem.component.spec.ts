@@ -1,8 +1,14 @@
+import { not } from '@angular/compiler/src/output/output_ast';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import {
+  fakeQuestionConfig,
+  QuestionConfig,
+} from '@shared/models/question-config.interface';
 import { AditionService } from 'src/app/core/services/adition/adition.service';
 import { DivisionService } from 'src/app/core/services/division/division.service';
 import { MultiplicationService } from 'src/app/core/services/multiplication/multiplication.service';
+import { QuestionConfigService } from 'src/app/core/services/question-config/question-config.service';
 import { SubtractionService } from 'src/app/core/services/subtraction/subtraction.service';
 import { Problem } from './models/problem.interface';
 
@@ -15,6 +21,7 @@ describe('ProblemComponent', () => {
   let mockAditionService: jasmine.SpyObj<AditionService>;
   let mockMultiplicationService: jasmine.SpyObj<MultiplicationService>;
   let mockDivisionService: jasmine.SpyObj<DivisionService>;
+  let mockQuestionConfigService: jasmine.SpyObj<QuestionConfigService>;
 
   beforeEach(async () => {
     mockSubtractionService = jasmine.createSpyObj('mockSubtractionService', [
@@ -33,6 +40,11 @@ describe('ProblemComponent', () => {
     mockDivisionService = jasmine.createSpyObj('mockDivisionService', [
       'getProblem',
     ]);
+
+    mockQuestionConfigService = jasmine.createSpyObj(
+      'mockQuestionConfigService',
+      ['getConfig']
+    );
 
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
@@ -54,11 +66,41 @@ describe('ProblemComponent', () => {
           provide: DivisionService,
           useValue: mockDivisionService,
         },
+        {
+          provide: QuestionConfigService,
+          useValue: mockQuestionConfigService,
+        },
       ],
     }).compileComponents();
   });
 
   beforeEach(() => {
+    const subtractionProblem: Problem = {
+      text: 'Lorem ipsum dolor',
+      correctAnswer: { quotient: 10 },
+    };
+
+    const aditionProblem: Problem = {
+      text: 'Lorem ipsum dolor',
+      correctAnswer: { quotient: 20 },
+    };
+
+    const multiplicationProblem: Problem = {
+      text: 'Lorem ipsum dolor',
+      correctAnswer: { quotient: 30 },
+    };
+
+    const divisionProblem: Problem = {
+      text: 'Lorem ipsum dolor',
+      correctAnswer: { quotient: 34 },
+    };
+
+    mockSubtractionService.getProblem.and.returnValue(subtractionProblem);
+    mockAditionService.getProblem.and.returnValue(aditionProblem);
+    mockMultiplicationService.getProblem.and.returnValue(multiplicationProblem);
+    mockDivisionService.getProblem.and.returnValue(divisionProblem);
+    mockQuestionConfigService.getConfig.and.returnValue(fakeQuestionConfig);
+
     fixture = TestBed.createComponent(ProblemComponent);
     component = fixture.componentInstance;
   });
@@ -81,35 +123,15 @@ describe('ProblemComponent', () => {
   });
 
   describe('#generateNewQestion', () => {
-    it('should invoke services to get problems', () => {
-      // Given
-      const subtractionProblem: Problem = {
-        text: 'Lorem ipsum dolor',
-        correctAnswer: { quotient: 10 },
-      };
+    it('should consult config service', () => {
+      // When
+      component.generateNewQestion();
 
-      const aditionProblem: Problem = {
-        text: 'Lorem ipsum dolor',
-        correctAnswer: { quotient: 20 },
-      };
+      // Then
+      expect(mockQuestionConfigService.getConfig).toHaveBeenCalled();
+    });
 
-      const multiplicationProblem: Problem = {
-        text: 'Lorem ipsum dolor',
-        correctAnswer: { quotient: 30 },
-      };
-
-      const divisionProblem: Problem = {
-        text: 'Lorem ipsum dolor',
-        correctAnswer: { quotient: 34 },
-      };
-
-      mockSubtractionService.getProblem.and.returnValue(subtractionProblem);
-      mockAditionService.getProblem.and.returnValue(aditionProblem);
-      mockMultiplicationService.getProblem.and.returnValue(
-        multiplicationProblem
-      );
-      mockDivisionService.getProblem.and.returnValue(divisionProblem);
-
+    it('should get problems from respective services', () => {
       // When
       component.generateNewQestion();
 
@@ -118,6 +140,106 @@ describe('ProblemComponent', () => {
       expect(mockAditionService.getProblem).toHaveBeenCalled();
       expect(mockMultiplicationService.getProblem).toHaveBeenCalled();
       expect(mockDivisionService.getProblem).toHaveBeenCalled();
+    });
+
+    it('should not get adition problem if Adition is not true', () => {
+      // Given
+      const newConfig = JSON.parse(
+        JSON.stringify(fakeQuestionConfig)
+      ) as QuestionConfig;
+
+      newConfig.problems.operations = {
+        Adition: false,
+        Subtraction: true,
+        Multiplication: true,
+        Division: true,
+      };
+
+      mockQuestionConfigService.getConfig.and.returnValue(newConfig);
+
+      // When
+      component.generateNewQestion();
+
+      // Then
+      expect(mockAditionService.getProblem).not.toHaveBeenCalled();
+      expect(mockSubtractionService.getProblem).toHaveBeenCalled();
+      expect(mockMultiplicationService.getProblem).toHaveBeenCalled();
+      expect(mockDivisionService.getProblem).toHaveBeenCalled();
+    });
+
+    it('should not get subtraction problem if Subtraction is not true', () => {
+      // Given
+      const newConfig = JSON.parse(
+        JSON.stringify(fakeQuestionConfig)
+      ) as QuestionConfig;
+
+      newConfig.problems.operations = {
+        Adition: true,
+        Subtraction: false,
+        Multiplication: true,
+        Division: true,
+      };
+
+      mockQuestionConfigService.getConfig.and.returnValue(newConfig);
+
+      // When
+      component.generateNewQestion();
+
+      // Then
+      expect(mockAditionService.getProblem).toHaveBeenCalled();
+      expect(mockSubtractionService.getProblem).not.toHaveBeenCalled();
+      expect(mockMultiplicationService.getProblem).toHaveBeenCalled();
+      expect(mockDivisionService.getProblem).toHaveBeenCalled();
+    });
+
+    it('should not get multiplication problem if Multiplication is not true', () => {
+      // Given
+      const newConfig = JSON.parse(
+        JSON.stringify(fakeQuestionConfig)
+      ) as QuestionConfig;
+
+      newConfig.problems.operations = {
+        Adition: true,
+        Subtraction: true,
+        Multiplication: false,
+        Division: true,
+      };
+
+      mockQuestionConfigService.getConfig.and.returnValue(newConfig);
+
+      // When
+      component.generateNewQestion();
+
+      // Then
+      expect(mockAditionService.getProblem).toHaveBeenCalled();
+      expect(mockSubtractionService.getProblem).toHaveBeenCalled();
+      expect(mockMultiplicationService.getProblem).not.toHaveBeenCalled();
+      expect(mockDivisionService.getProblem).toHaveBeenCalled();
+    });
+
+    it('should not get division problem if Division is not true', () => {
+      // Given
+      const newConfig = JSON.parse(
+        JSON.stringify(fakeQuestionConfig)
+      ) as QuestionConfig;
+
+      newConfig.problems.operations = {
+        Adition: true,
+        Subtraction: true,
+        Multiplication: true,
+        Division: false,
+      };
+
+      mockQuestionConfigService.getConfig.and.returnValue(newConfig);
+
+      // When
+      component.generateNewQestion();
+
+      // Then
+      expect(mockAditionService.getProblem).toHaveBeenCalled();
+      expect(mockSubtractionService.getProblem).toHaveBeenCalled();
+      expect(mockMultiplicationService.getProblem).toHaveBeenCalled();
+      expect(mockDivisionService.getProblem).not.toHaveBeenCalled();
     });
   });
 

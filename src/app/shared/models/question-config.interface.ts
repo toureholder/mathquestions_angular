@@ -1,3 +1,5 @@
+import { MathOperation } from './operation.enum';
+
 export interface QuestionConfig {
   adition: { maxNumberOfNumbers: number; maxValue: number };
   subtraction: { maxNumberOfNumbers: number; maxValue: number };
@@ -8,6 +10,9 @@ export interface QuestionConfig {
   };
   division: {
     maxValues: number[];
+  };
+  problems: {
+    operations: { [key in keyof typeof MathOperation]: boolean };
   };
 }
 
@@ -21,5 +26,13 @@ export const fakeQuestionConfig: QuestionConfig = {
   },
   division: {
     maxValues: [99, 6],
+  },
+  problems: {
+    operations: {
+      Adition: true,
+      Subtraction: true,
+      Multiplication: true,
+      Division: true,
+    },
   },
 };

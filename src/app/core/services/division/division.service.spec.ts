@@ -68,6 +68,14 @@ describe('DivisionService', () => {
         division: {
           maxValues: [],
         },
+        problems: {
+          operations: {
+            Adition: true,
+            Subtraction: true,
+            Multiplication: true,
+            Division: true,
+          },
+        },
       });
 
       expect(service.getProblem()).toBeTruthy();
