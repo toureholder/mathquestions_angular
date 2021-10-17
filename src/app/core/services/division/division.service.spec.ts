@@ -56,6 +56,26 @@ describe('DivisionService', () => {
       expect(service.getProblem({ divisor: 10 })).toBeTruthy();
     });
 
+    it('should return a value when it is a remainder question', () => {
+      expect(service.getProblem({ isRemanderQuestion: true })).toBeTruthy();
+    });
+
+    it('should return a value when it is not a remainder question', () => {
+      expect(service.getProblem({ isRemanderQuestion: false })).toBeTruthy();
+    });
+
+    it('should return a value when it is a remainder question and divisor is 2', () => {
+      expect(
+        service.getProblem({ isRemanderQuestion: true, divisor: 2 })
+      ).toBeTruthy();
+    });
+
+    it('should return a value when it is not a remainder question and divisor is greater than 2', () => {
+      expect(
+        service.getProblem({ isRemanderQuestion: false, divisor: 10 })
+      ).toBeTruthy();
+    });
+
     it(`is defensive and returns a value even if config doesn't have max values`, () => {
       mockQuestionConfigService.getConfig.and.returnValue({
         adition: { maxNumberOfNumbers: 343, maxValue: 353 },
