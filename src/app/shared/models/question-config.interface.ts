@@ -20,6 +20,6 @@ export const fakeQuestionConfig: QuestionConfig = {
     defaultMaxValue: 333,
   },
   division: {
-    maxValues: [3540, 54322],
+    maxValues: [99, 6],
   },
 };
