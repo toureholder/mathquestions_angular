@@ -119,8 +119,10 @@
       }
     }
   },
-  "defaultProject": "mathquestions-angular",
   "cli": {
-    "defaultCollection": "@angular-eslint/schematics"
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ],
+    "analytics": "2a99e1e7-c55f-4ea2-a121-cadfbcec7921"
   }
 }
