@@ -1,0 +1,39 @@
+name: Deploy to production
+on:
+  push:
+    branches: [main]
+jobs:
+  test_build_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.13.1
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test:ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MATH_5C094 }}'
+          projectId: math-5c094
+          channelId: live
+          target: production
+
+      - name: Upload test coverage
+        run: bash <(curl -s https://codecov.io/bash)
